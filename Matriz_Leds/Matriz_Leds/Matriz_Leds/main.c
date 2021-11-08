@@ -10,6 +10,41 @@
 #include <util/delay.h>
 #include "UART.h"
 
+void filas(int i, int velocidad, char PORT[], char ANIMACION1[]){
+	// VELOCIDAD DE DESPLAZAMIENTO
+	for (int k=0;k<velocidad;k++)//
+	{
+		//CANTIDAD DE HEXADECIMALES PARA 1 FORMA PARTICULAR
+		for (int j=0; j<8;j++)//
+		{
+			if (j==0 || j==1 || j==2 || j==3 || j==4){
+				PORTD = 0;
+				PORTC = PORT[j];
+			}
+			
+			if (j!=0 && j!=1 && j!=2 && j!=3 && j!=4){
+				PORTC = 0;
+				PORTD = PORT[j];
+			}
+			
+			PORTB = ~ANIMACION1[i+j];// SE NIEGA PARA QUE SE MUESTRE EN LA MATRIZ
+			_delay_ms(0.25);// DELAY PARA QUE SE MUESTRE EN LA MATRIZ SIN PARPADEOS
+		}
+	}
+}
+
+void animacion1(char PORT[], char ANIMACION1[]) {
+	// CANTIDAD DE FILAS -1
+	for (int i=0;i<32;i+=8)//
+	{
+		filas(i,15,PORT,ANIMACION1);
+	}
+	for (int i=24;i>=0;i-=8)//
+	{
+		filas(i,15,PORT,ANIMACION1);
+	}
+}
+
 int main(void)
 {
 	// PARA EL DATO
@@ -34,23 +69,41 @@ int main(void)
 		0x0, 0x7e, 0x7e, 0x16, 0x16, 0x7e, 0x7e, 0x0, //A
 	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}; //ESPACIO
 	
+	char ANIMACION1[] = {
+		0x0, 0x0, 0x0, 0x18, 0x18, 0x0, 0x0, 0x0, // CENTRO 1
+		0x0, 0x0, 0x24, 0x0, 0x0, 0x24, 0x0, 0x0, // CENTRO 2
+		0x0, 0x42, 0x0, 0x0, 0x0, 0x0, 0x42, 0x0, // CENTRO 3
+		0x81, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x81, // CENTRO 4
+	};
+	
 	while(1){
 		
-		//INICIO 0B 0100 0000
+		//INICIO 0B 0100 0000 NO SALE DEL WHILE HASTA QUE SE PRESIONE ALGUN BOTÓN
 		while (PIND == 0x4){
 		}
 		
-		//PRESIONA BOTONERA START/NEXT 0B 0110 0000
+		//PRESIONA BOTONERA START/NEXT 0B 0101 0000
 		if (PIND == 0x6){
 			
 			while (PIND == 0x6){
 			}
 			
+			int t = 0;
+			while (t < 10) {
+				animacion1(PORT,ANIMACION1);
+				t += 1;
+			}	
+			
+			
+			
 			//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
+			// CANTIDAD DE FILAS -1
 			for (int i=0;i<32;i++)//
 			{
-				for (int k=0;k<50;k++)//
+				// VELOCIDAD DE DESPLAZAMIENTO
+				for (int k=0;k<20;k++)//
 				{
+					//CANTIDAD DE HEXADECIMALES PARA 1 FORMA PARTICULAR
 					for (int j=0; j<8;j++)//
 					{
 						if (j==0 || j==1 || j==2 || j==3 || j==4){
