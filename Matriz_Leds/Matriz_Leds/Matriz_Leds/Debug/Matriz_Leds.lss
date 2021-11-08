@@ -3,29 +3,29 @@ Matriz_Leds.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000030  00800100  00000168  000001dc  2**0
+  0 .data         00000030  00800100  000001b0  00000224  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000168  00000000  00000000  00000074  2**1
+  1 .text         000001b0  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000020c  2**0
+  2 .comment      00000030  00000000  00000000  00000254  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000023c  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000284  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000040  00000000  00000000  0000027c  2**0
+  4 .debug_aranges 00000040  00000000  00000000  000002c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000081e  00000000  00000000  000002bc  2**0
+  5 .debug_info   0000082e  00000000  00000000  00000304  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000732  00000000  00000000  00000ada  2**0
+  6 .debug_abbrev 0000074c  00000000  00000000  00000b32  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000038c  00000000  00000000  0000120c  2**0
+  7 .debug_line   000003b9  00000000  00000000  0000127e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000080  00000000  00000000  00001598  2**2
+  8 .debug_frame  00000080  00000000  00000000  00001638  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003ff  00000000  00000000  00001618  2**0
+  9 .debug_str    000003ff  00000000  00000000  000016b8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000178  00000000  00000000  00001a17  2**0
+ 10 .debug_loc    00000154  00000000  00000000  00001ab7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000060  00000000  00000000  00001b8f  2**0
+ 11 .debug_ranges 00000060  00000000  00000000  00001c0b  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,7 +70,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e8 e6       	ldi	r30, 0x68	; 104
+  7a:	e0 eb       	ldi	r30, 0xB0	; 176
   7c:	f1 e0       	ldi	r31, 0x01	; 1
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -78,182 +78,239 @@ Disassembly of section .text:
   84:	a0 33       	cpi	r26, 0x30	; 48
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
-  8a:	0e 94 4b 00 	call	0x96	; 0x96 <main>
-  8e:	0c 94 b2 00 	jmp	0x164	; 0x164 <_exit>
+  8a:	0e 94 60 00 	call	0xc0	; 0xc0 <main>
+  8e:	0c 94 d6 00 	jmp	0x1ac	; 0x1ac <_exit>
 
 00000092 <__bad_interrupt>:
   92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-00000096 <main>:
+00000096 <UART_init>:
+	while(*cadena !=0x00){				//mientras el último valor de la cadena sea diferente a el caracter nulo
+		UART_write(*cadena);			//transmite los caracteres de cadena
+		cadena++;						//incrementa la ubicación de los caracteres en cadena
+										//para enviar el siguiente caracter de cadena
+	}
+}
+  96:	8a b1       	in	r24, 0x0a	; 10
+  98:	82 60       	ori	r24, 0x02	; 2
+  9a:	8a b9       	out	0x0a, r24	; 10
+  9c:	8a b1       	in	r24, 0x0a	; 10
+  9e:	8e 7f       	andi	r24, 0xFE	; 254
+  a0:	8a b9       	out	0x0a, r24	; 10
+  a2:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+  a6:	88 e9       	ldi	r24, 0x98	; 152
+  a8:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+  ac:	86 e0       	ldi	r24, 0x06	; 6
+  ae:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7f80c2>
+  b2:	87 e6       	ldi	r24, 0x67	; 103
+  b4:	90 e0       	ldi	r25, 0x00	; 0
+  b6:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+  ba:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+  be:	08 95       	ret
+
+000000c0 <main>:
 #include <avr/io.h>
 #include <util/delay.h>
 #include "UART.h"
 
 int main(void)
 {
-  96:	cf 93       	push	r28
-  98:	df 93       	push	r29
-  9a:	cd b7       	in	r28, 0x3d	; 61
-  9c:	de b7       	in	r29, 0x3e	; 62
-  9e:	e0 97       	sbiw	r28, 0x30	; 48
-  a0:	0f b6       	in	r0, 0x3f	; 63
-  a2:	f8 94       	cli
-  a4:	de bf       	out	0x3e, r29	; 62
-  a6:	0f be       	out	0x3f, r0	; 63
-  a8:	cd bf       	out	0x3d, r28	; 61
+  c0:	cf 93       	push	r28
+  c2:	df 93       	push	r29
+  c4:	cd b7       	in	r28, 0x3d	; 61
+  c6:	de b7       	in	r29, 0x3e	; 62
+  c8:	e0 97       	sbiw	r28, 0x30	; 48
+  ca:	0f b6       	in	r0, 0x3f	; 63
+  cc:	f8 94       	cli
+  ce:	de bf       	out	0x3e, r29	; 62
+  d0:	0f be       	out	0x3f, r0	; 63
+  d2:	cd bf       	out	0x3d, r28	; 61
 	// PARA EL DATO
-	DDRB = 0B11111111;
-  aa:	8f ef       	ldi	r24, 0xFF	; 255
-  ac:	84 b9       	out	0x04, r24	; 4
+	DDRB = 0B11111111; // SALIDA TODO EL PUERTO B
+  d4:	8f ef       	ldi	r24, 0xFF	; 255
+  d6:	84 b9       	out	0x04, r24	; 4
+	
 	// PARA EL DESPLAZMIENTO
-	DDRC |= (1<<0)|(1<<1); // SALIDAS C0 y C1 
-  ae:	87 b1       	in	r24, 0x07	; 7
-  b0:	83 60       	ori	r24, 0x03	; 3
-  b2:	87 b9       	out	0x07, r24	; 7
-	DDRD |= (1<<2)|(1<<3)|(1<<4)|(1<<5)|(1<<6)|(1<<7); //SALIDAS D2,D3,D4,D5,D6,D7
-  b4:	8a b1       	in	r24, 0x0a	; 10
-  b6:	8c 6f       	ori	r24, 0xFC	; 252
-  b8:	8a b9       	out	0x0a, r24	; 10
+	DDRC |= (1<<0)|(1<<1)|(1<<2)|(1<<3)|(1<<4); // SALIDAS C0,C1,C2,C3,C4 
+  d8:	87 b1       	in	r24, 0x07	; 7
+  da:	8f 61       	ori	r24, 0x1F	; 31
+  dc:	87 b9       	out	0x07, r24	; 7
+	DDRD |= (1<<5)|(1<<6)|(1<<7); //SALIDAS D5,D6,D7
+  de:	8a b1       	in	r24, 0x0a	; 10
+  e0:	80 6e       	ori	r24, 0xE0	; 224
+  e2:	8a b9       	out	0x0a, r24	; 10
 	
-	char PORT[8] =  {1,2,4,8,16,32,64,128};//valores de pines del  PORTD
-  ba:	88 e0       	ldi	r24, 0x08	; 8
-  bc:	e0 e0       	ldi	r30, 0x00	; 0
-  be:	f1 e0       	ldi	r31, 0x01	; 1
-  c0:	de 01       	movw	r26, r28
-  c2:	11 96       	adiw	r26, 0x01	; 1
-  c4:	01 90       	ld	r0, Z+
-  c6:	0d 92       	st	X+, r0
-  c8:	8a 95       	dec	r24
-  ca:	e1 f7       	brne	.-8      	; 0xc4 <main+0x2e>
-	//{PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7}
+	// PARA LAS BOTONERAS
+	DDRD |= (0<<2)|(0<<3)|(0<<4); //ENTRADAS PARA LOS PUERTOS D2,D3,D4
+  e4:	8a b1       	in	r24, 0x0a	; 10
+  e6:	8a b9       	out	0x0a, r24	; 10
 	
+	UART_init();
+  e8:	0e 94 4b 00 	call	0x96	; 0x96 <UART_init>
 	
+	char PORT[8] =  {1,2,4,8,16,32,64,128};//VALORES DE PINES DEL PORTC Y PORTD
+  ec:	88 e0       	ldi	r24, 0x08	; 8
+  ee:	e0 e0       	ldi	r30, 0x00	; 0
+  f0:	f1 e0       	ldi	r31, 0x01	; 1
+  f2:	de 01       	movw	r26, r28
+  f4:	11 96       	adiw	r26, 0x01	; 1
+  f6:	01 90       	ld	r0, Z+
+  f8:	0d 92       	st	X+, r0
+  fa:	8a 95       	dec	r24
+  fc:	e1 f7       	brne	.-8      	; 0xf6 <main+0x36>
+	//{PC0,PC1,PC2,PC3,PC4,PD5,PD6,PD7}
+	
+	 
 	char MENSAJE[]={0x0, 0x7e, 0x7e, 0x18, 0x18, 0x7e, 0x7e, 0x0, //H
-  cc:	88 e2       	ldi	r24, 0x28	; 40
-  ce:	e8 e0       	ldi	r30, 0x08	; 8
-  d0:	f1 e0       	ldi	r31, 0x01	; 1
-  d2:	de 01       	movw	r26, r28
-  d4:	19 96       	adiw	r26, 0x09	; 9
-  d6:	01 90       	ld	r0, Z+
-  d8:	0d 92       	st	X+, r0
-  da:	8a 95       	dec	r24
-  dc:	e1 f7       	brne	.-8      	; 0xd6 <main+0x40>
+  fe:	88 e2       	ldi	r24, 0x28	; 40
+ 100:	e8 e0       	ldi	r30, 0x08	; 8
+ 102:	f1 e0       	ldi	r31, 0x01	; 1
+ 104:	de 01       	movw	r26, r28
+ 106:	19 96       	adiw	r26, 0x09	; 9
+ 108:	01 90       	ld	r0, Z+
+ 10a:	0d 92       	st	X+, r0
+ 10c:	8a 95       	dec	r24
+ 10e:	e1 f7       	brne	.-8      	; 0x108 <main+0x48>
+	0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0}; //ESPACIO
 	
 	while(1){
 		
+		//INICIO 0B 0100 0000
+		while (PIND == 0x4){
+ 110:	89 b1       	in	r24, 0x09	; 9
+ 112:	84 30       	cpi	r24, 0x04	; 4
+ 114:	e9 f3       	breq	.-6      	; 0x110 <main+0x50>
+		}
 		
-		//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
-		for (int i=0;i<32;i++)//
-  de:	40 e0       	ldi	r20, 0x00	; 0
-  e0:	50 e0       	ldi	r21, 0x00	; 0
-  e2:	3c c0       	rjmp	.+120    	; 0x15c <main+0xc6>
-		{
-			for (int k=0;k<50;k++)//
+		//PRESIONA BOTONERA START/NEXT 0B 0110 0000
+		if (PIND == 0x6){
+ 116:	89 b1       	in	r24, 0x09	; 9
+ 118:	86 30       	cpi	r24, 0x06	; 6
+ 11a:	d1 f7       	brne	.-12     	; 0x110 <main+0x50>
+			
+			while (PIND == 0x6){
+ 11c:	89 b1       	in	r24, 0x09	; 9
+ 11e:	86 30       	cpi	r24, 0x06	; 6
+ 120:	e9 f3       	breq	.-6      	; 0x11c <main+0x5c>
+ 122:	40 e0       	ldi	r20, 0x00	; 0
+ 124:	50 e0       	ldi	r21, 0x00	; 0
+ 126:	3c c0       	rjmp	.+120    	; 0x1a0 <main+0xe0>
 			{
-				for (int j=0; j<8;j++)//
+				for (int k=0;k<50;k++)//
 				{
-					if (j==0 || j==1){
-  e4:	9c 01       	movw	r18, r24
-  e6:	82 30       	cpi	r24, 0x02	; 2
-  e8:	91 05       	cpc	r25, r1
-  ea:	48 f4       	brcc	.+18     	; 0xfe <main+0x68>
-						PORTD = 0;
-  ec:	1b b8       	out	0x0b, r1	; 11
-						PORTC = PORT[j];
-  ee:	e1 e0       	ldi	r30, 0x01	; 1
-  f0:	f0 e0       	ldi	r31, 0x00	; 0
-  f2:	ec 0f       	add	r30, r28
-  f4:	fd 1f       	adc	r31, r29
-  f6:	e8 0f       	add	r30, r24
-  f8:	f9 1f       	adc	r31, r25
-  fa:	e0 81       	ld	r30, Z
-  fc:	e8 b9       	out	0x08, r30	; 8
-					}
-					
-					if (j!=0 && j!=1){
-  fe:	22 30       	cpi	r18, 0x02	; 2
- 100:	31 05       	cpc	r19, r1
- 102:	48 f0       	brcs	.+18     	; 0x116 <main+0x80>
-						PORTC = 0;
- 104:	18 b8       	out	0x08, r1	; 8
-						PORTD = PORT[j];
- 106:	e1 e0       	ldi	r30, 0x01	; 1
- 108:	f0 e0       	ldi	r31, 0x00	; 0
- 10a:	ec 0f       	add	r30, r28
- 10c:	fd 1f       	adc	r31, r29
- 10e:	e8 0f       	add	r30, r24
- 110:	f9 1f       	adc	r31, r25
- 112:	20 81       	ld	r18, Z
- 114:	2b b9       	out	0x0b, r18	; 11
-					}
-					
-					PORTB = ~MENSAJE[i+j];// se niega para que se muestre en la matriz
- 116:	fa 01       	movw	r30, r20
- 118:	e8 0f       	add	r30, r24
- 11a:	f9 1f       	adc	r31, r25
- 11c:	29 e0       	ldi	r18, 0x09	; 9
- 11e:	30 e0       	ldi	r19, 0x00	; 0
- 120:	2c 0f       	add	r18, r28
- 122:	3d 1f       	adc	r19, r29
- 124:	e2 0f       	add	r30, r18
- 126:	f3 1f       	adc	r31, r19
- 128:	20 81       	ld	r18, Z
- 12a:	20 95       	com	r18
- 12c:	25 b9       	out	0x05, r18	; 5
+					for (int j=0; j<8;j++)//
+					{
+						if (j==0 || j==1 || j==2 || j==3 || j==4){
+ 128:	9c 01       	movw	r18, r24
+ 12a:	85 30       	cpi	r24, 0x05	; 5
+ 12c:	91 05       	cpc	r25, r1
+ 12e:	48 f4       	brcc	.+18     	; 0x142 <main+0x82>
+							PORTD = 0;
+ 130:	1b b8       	out	0x0b, r1	; 11
+							PORTC = PORT[j];
+ 132:	e1 e0       	ldi	r30, 0x01	; 1
+ 134:	f0 e0       	ldi	r31, 0x00	; 0
+ 136:	ec 0f       	add	r30, r28
+ 138:	fd 1f       	adc	r31, r29
+ 13a:	e8 0f       	add	r30, r24
+ 13c:	f9 1f       	adc	r31, r25
+ 13e:	e0 81       	ld	r30, Z
+ 140:	e8 b9       	out	0x08, r30	; 8
+						}
+						
+						if (j!=0 && j!=1 && j!=2 && j!=3 && j!=4){
+ 142:	25 30       	cpi	r18, 0x05	; 5
+ 144:	31 05       	cpc	r19, r1
+ 146:	48 f0       	brcs	.+18     	; 0x15a <main+0x9a>
+							PORTC = 0;
+ 148:	18 b8       	out	0x08, r1	; 8
+							PORTD = PORT[j];
+ 14a:	e1 e0       	ldi	r30, 0x01	; 1
+ 14c:	f0 e0       	ldi	r31, 0x00	; 0
+ 14e:	ec 0f       	add	r30, r28
+ 150:	fd 1f       	adc	r31, r29
+ 152:	e8 0f       	add	r30, r24
+ 154:	f9 1f       	adc	r31, r25
+ 156:	20 81       	ld	r18, Z
+ 158:	2b b9       	out	0x0b, r18	; 11
+						}
+						
+						PORTB = ~MENSAJE[i+j];// SE NIEGA PARA QUE SE MUESTRE EN LA MATRIZ
+ 15a:	fa 01       	movw	r30, r20
+ 15c:	e8 0f       	add	r30, r24
+ 15e:	f9 1f       	adc	r31, r25
+ 160:	29 e0       	ldi	r18, 0x09	; 9
+ 162:	30 e0       	ldi	r19, 0x00	; 0
+ 164:	2c 0f       	add	r18, r28
+ 166:	3d 1f       	adc	r19, r29
+ 168:	e2 0f       	add	r30, r18
+ 16a:	f3 1f       	adc	r31, r19
+ 16c:	20 81       	ld	r18, Z
+ 16e:	20 95       	com	r18
+ 170:	25 b9       	out	0x05, r18	; 5
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 12e:	e3 ef       	ldi	r30, 0xF3	; 243
- 130:	f1 e0       	ldi	r31, 0x01	; 1
- 132:	31 97       	sbiw	r30, 0x01	; 1
- 134:	f1 f7       	brne	.-4      	; 0x132 <main+0x9c>
- 136:	00 c0       	rjmp	.+0      	; 0x138 <main+0xa2>
- 138:	00 00       	nop
-		//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
-		for (int i=0;i<32;i++)//
-		{
-			for (int k=0;k<50;k++)//
+ 172:	e3 ef       	ldi	r30, 0xF3	; 243
+ 174:	f1 e0       	ldi	r31, 0x01	; 1
+ 176:	31 97       	sbiw	r30, 0x01	; 1
+ 178:	f1 f7       	brne	.-4      	; 0x176 <main+0xb6>
+ 17a:	00 c0       	rjmp	.+0      	; 0x17c <main+0xbc>
+ 17c:	00 00       	nop
+			//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
+			for (int i=0;i<32;i++)//
 			{
-				for (int j=0; j<8;j++)//
- 13a:	01 96       	adiw	r24, 0x01	; 1
- 13c:	02 c0       	rjmp	.+4      	; 0x142 <main+0xac>
- 13e:	80 e0       	ldi	r24, 0x00	; 0
- 140:	90 e0       	ldi	r25, 0x00	; 0
- 142:	88 30       	cpi	r24, 0x08	; 8
- 144:	91 05       	cpc	r25, r1
- 146:	74 f2       	brlt	.-100    	; 0xe4 <main+0x4e>
-		
-		
-		//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
-		for (int i=0;i<32;i++)//
-		{
-			for (int k=0;k<50;k++)//
- 148:	6f 5f       	subi	r22, 0xFF	; 255
- 14a:	7f 4f       	sbci	r23, 0xFF	; 255
- 14c:	02 c0       	rjmp	.+4      	; 0x152 <main+0xbc>
- 14e:	60 e0       	ldi	r22, 0x00	; 0
- 150:	70 e0       	ldi	r23, 0x00	; 0
- 152:	62 33       	cpi	r22, 0x32	; 50
- 154:	71 05       	cpc	r23, r1
- 156:	9c f3       	brlt	.-26     	; 0x13e <main+0xa8>
-	
-	while(1){
-		
-		
-		//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
-		for (int i=0;i<32;i++)//
- 158:	4f 5f       	subi	r20, 0xFF	; 255
- 15a:	5f 4f       	sbci	r21, 0xFF	; 255
- 15c:	40 32       	cpi	r20, 0x20	; 32
- 15e:	51 05       	cpc	r21, r1
- 160:	b4 f3       	brlt	.-20     	; 0x14e <main+0xb8>
- 162:	bd cf       	rjmp	.-134    	; 0xde <main+0x48>
+				for (int k=0;k<50;k++)//
+				{
+					for (int j=0; j<8;j++)//
+ 17e:	01 96       	adiw	r24, 0x01	; 1
+ 180:	02 c0       	rjmp	.+4      	; 0x186 <main+0xc6>
+ 182:	80 e0       	ldi	r24, 0x00	; 0
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	88 30       	cpi	r24, 0x08	; 8
+ 188:	91 05       	cpc	r25, r1
+ 18a:	74 f2       	brlt	.-100    	; 0x128 <main+0x68>
+			}
+			
+			//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
+			for (int i=0;i<32;i++)//
+			{
+				for (int k=0;k<50;k++)//
+ 18c:	6f 5f       	subi	r22, 0xFF	; 255
+ 18e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 190:	02 c0       	rjmp	.+4      	; 0x196 <main+0xd6>
+ 192:	60 e0       	ldi	r22, 0x00	; 0
+ 194:	70 e0       	ldi	r23, 0x00	; 0
+ 196:	62 33       	cpi	r22, 0x32	; 50
+ 198:	71 05       	cpc	r23, r1
+ 19a:	9c f3       	brlt	.-26     	; 0x182 <main+0xc2>
+			
+			while (PIND == 0x6){
+			}
+			
+			//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
+			for (int i=0;i<32;i++)//
+ 19c:	4f 5f       	subi	r20, 0xFF	; 255
+ 19e:	5f 4f       	sbci	r21, 0xFF	; 255
+ 1a0:	40 32       	cpi	r20, 0x20	; 32
+ 1a2:	51 05       	cpc	r21, r1
+ 1a4:	b4 f3       	brlt	.-20     	; 0x192 <main+0xd2>
+						_delay_ms(0.25);// DELAY PARA QUE SE MUESTRE EN LA MATRIZ SIN PARPADEOS
+					}
+				}
+			}
+			
+			PORTB = 0;
+ 1a6:	15 b8       	out	0x05, r1	; 5
+			PORTD = 0;
+ 1a8:	1b b8       	out	0x0b, r1	; 11
+ 1aa:	b2 cf       	rjmp	.-156    	; 0x110 <main+0x50>
 
-00000164 <_exit>:
- 164:	f8 94       	cli
+000001ac <_exit>:
+ 1ac:	f8 94       	cli
 
-00000166 <__stop_program>:
- 166:	ff cf       	rjmp	.-2      	; 0x166 <__stop_program>
+000001ae <__stop_program>:
+ 1ae:	ff cf       	rjmp	.-2      	; 0x1ae <__stop_program>
