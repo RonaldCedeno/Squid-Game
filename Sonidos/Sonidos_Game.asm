@@ -194,10 +194,136 @@ L_end_C4:
 	RETURN
 ; end of _C4
 
+_F6:
+
+;Sonidos_Game.c,57 :: 		void F6 (int time) {
+;Sonidos_Game.c,58 :: 		Sound_Play(1397,time);
+	MOVLW      117
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      5
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_F6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_F6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,59 :: 		}
+L_end_F6:
+	RETURN
+; end of _F6
+
+_GB6:
+
+;Sonidos_Game.c,61 :: 		void GB6 (int time) {
+;Sonidos_Game.c,62 :: 		Sound_Play(1480, time);
+	MOVLW      200
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      5
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_GB6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_GB6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,63 :: 		}
+L_end_GB6:
+	RETURN
+; end of _GB6
+
+_G6:
+
+;Sonidos_Game.c,65 :: 		void G6 (int time) {
+;Sonidos_Game.c,66 :: 		Sound_Play(1568, time);
+	MOVLW      32
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      6
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_G6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_G6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,67 :: 		}
+L_end_G6:
+	RETURN
+; end of _G6
+
+_Ab6:
+
+;Sonidos_Game.c,69 :: 		void Ab6 (int time) {
+;Sonidos_Game.c,70 :: 		Sound_Play(1661, time);
+	MOVLW      125
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      6
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_Ab6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_Ab6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,71 :: 		}
+L_end_Ab6:
+	RETURN
+; end of _Ab6
+
+_A6:
+
+;Sonidos_Game.c,73 :: 		void A6 (int time) {
+;Sonidos_Game.c,74 :: 		Sound_Play(1760, time);
+	MOVLW      224
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      6
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_A6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_A6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,75 :: 		}
+L_end_A6:
+	RETURN
+; end of _A6
+
+_ToneB6:
+
+;Sonidos_Game.c,77 :: 		void ToneB6 (int time) {
+;Sonidos_Game.c,78 :: 		Sound_Play(1976, time);
+	MOVLW      184
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      7
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_ToneB6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_ToneB6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,79 :: 		}
+L_end_ToneB6:
+	RETURN
+; end of _ToneB6
+
+_C6:
+
+;Sonidos_Game.c,81 :: 		void C6 (int time) {
+;Sonidos_Game.c,82 :: 		Sound_Play(1047, time);
+	MOVLW      23
+	MOVWF      FARG_Sound_Play_freq_in_hz+0
+	MOVLW      4
+	MOVWF      FARG_Sound_Play_freq_in_hz+1
+	MOVF       FARG_C6_time+0, 0
+	MOVWF      FARG_Sound_Play_duration_ms+0
+	MOVF       FARG_C6_time+1, 0
+	MOVWF      FARG_Sound_Play_duration_ms+1
+	CALL       _Sound_Play+0
+;Sonidos_Game.c,83 :: 		}
+L_end_C6:
+	RETURN
+; end of _C6
+
 _espacio:
 
-;Sonidos_Game.c,58 :: 		void espacio () {
-;Sonidos_Game.c,59 :: 		Sound_Play(0,50);
+;Sonidos_Game.c,86 :: 		void espacio () {
+;Sonidos_Game.c,87 :: 		Sound_Play(0,50);
 	CLRF       FARG_Sound_Play_freq_in_hz+0
 	CLRF       FARG_Sound_Play_freq_in_hz+1
 	MOVLW      50
@@ -205,15 +331,59 @@ _espacio:
 	MOVLW      0
 	MOVWF      FARG_Sound_Play_duration_ms+1
 	CALL       _Sound_Play+0
-;Sonidos_Game.c,60 :: 		}
+;Sonidos_Game.c,88 :: 		}
 L_end_espacio:
 	RETURN
 ; end of _espacio
 
+_Inicio:
+
+;Sonidos_Game.c,93 :: 		void Inicio (int time){
+;Sonidos_Game.c,94 :: 		F6(time);GB6(time);G6(time);Ab6(time);A6(time);ToneB6(time);C6(time);
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_F6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_F6_time+1
+	CALL       _F6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_GB6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_GB6_time+1
+	CALL       _GB6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_G6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_G6_time+1
+	CALL       _G6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_Ab6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_Ab6_time+1
+	CALL       _Ab6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_A6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_A6_time+1
+	CALL       _A6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_ToneB6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_ToneB6_time+1
+	CALL       _ToneB6+0
+	MOVF       FARG_Inicio_time+0, 0
+	MOVWF      FARG_C6_time+0
+	MOVF       FARG_Inicio_time+1, 0
+	MOVWF      FARG_C6_time+1
+	CALL       _C6+0
+;Sonidos_Game.c,95 :: 		}
+L_end_Inicio:
+	RETURN
+; end of _Inicio
+
 _SquidGame:
 
-;Sonidos_Game.c,66 :: 		void SquidGame (){
-;Sonidos_Game.c,72 :: 		ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();   ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
+;Sonidos_Game.c,98 :: 		void SquidGame (){
+;Sonidos_Game.c,104 :: 		ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();   ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
 	MOVLW      44
 	MOVWF      FARG_ToneB4_time+0
 	MOVLW      1
@@ -250,7 +420,7 @@ _SquidGame:
 	MOVWF      FARG_ToneB4_time+1
 	CALL       _ToneB4+0
 	CALL       _espacio+0
-;Sonidos_Game.c,73 :: 		Eb5(300);espacio();ToneB4(300);espacio();ToneB4(300);espacio();A4(300);espacio();G4(300);espacio();A4(300);espacio();ToneB4(600);espacio();
+;Sonidos_Game.c,105 :: 		Eb5(300);espacio();ToneB4(300);espacio();ToneB4(300);espacio();A4(300);espacio();G4(300);espacio();A4(300);espacio();ToneB4(600);espacio();
 	MOVLW      44
 	MOVWF      FARG_Eb5_time+0
 	MOVLW      1
@@ -293,7 +463,7 @@ _SquidGame:
 	MOVWF      FARG_ToneB4_time+1
 	CALL       _ToneB4+0
 	CALL       _espacio+0
-;Sonidos_Game.c,74 :: 		ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();   ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
+;Sonidos_Game.c,106 :: 		ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();   ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
 	MOVLW      44
 	MOVWF      FARG_ToneB4_time+0
 	MOVLW      1
@@ -330,7 +500,7 @@ _SquidGame:
 	MOVWF      FARG_ToneB4_time+1
 	CALL       _ToneB4+0
 	CALL       _espacio+0
-;Sonidos_Game.c,75 :: 		ToneB4(300);espacio();A4(300);espacio();G4(300);espacio();A4(300);espacio();G4(300);espacio();E4(300);espacio();E4(600);espacio();
+;Sonidos_Game.c,107 :: 		ToneB4(300);espacio();A4(300);espacio();G4(300);espacio();A4(300);espacio();G4(300);espacio();E4(300);espacio();E4(600);espacio();
 	MOVLW      44
 	MOVWF      FARG_ToneB4_time+0
 	MOVLW      1
@@ -373,15 +543,15 @@ _SquidGame:
 	MOVWF      FARG_E4_time+1
 	CALL       _E4+0
 	CALL       _espacio+0
-;Sonidos_Game.c,76 :: 		}
+;Sonidos_Game.c,108 :: 		}
 L_end_SquidGame:
 	RETURN
 ; end of _SquidGame
 
 _Red_Green:
 
-;Sonidos_Game.c,78 :: 		void Red_Green() {
-;Sonidos_Game.c,79 :: 		ToneB3(300);E4(300);E4(600);E4(600);D4(650);
+;Sonidos_Game.c,110 :: 		void Red_Green() {
+;Sonidos_Game.c,111 :: 		ToneB3(300);E4(300);E4(600);E4(600);D4(650);
 	MOVLW      44
 	MOVWF      FARG_ToneB3_time+0
 	MOVLW      1
@@ -407,7 +577,7 @@ _Red_Green:
 	MOVLW      2
 	MOVWF      FARG_D4_time+1
 	CALL       _D4+0
-;Sonidos_Game.c,80 :: 		E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
+;Sonidos_Game.c,112 :: 		E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
 	MOVLW      44
 	MOVWF      FARG_E4_time+0
 	MOVLW      1
@@ -433,404 +603,42 @@ _Red_Green:
 	MOVLW      2
 	MOVWF      FARG_D4_time+1
 	CALL       _D4+0
-;Sonidos_Game.c,81 :: 		}
+;Sonidos_Game.c,113 :: 		}
 L_end_Red_Green:
 	RETURN
 ; end of _Red_Green
 
-_Pink_Soldiers:
-
-;Sonidos_Game.c,83 :: 		void Pink_Soldiers(int t1, int t2){
-;Sonidos_Game.c,84 :: 		G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,85 :: 		G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,86 :: 		G4(t1);C4(t1);G4(t1);C4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,87 :: 		G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,88 :: 		G4(t1);E4(t2);C4(t2);G4(t1);GB4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,89 :: 		G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,90 :: 		G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,91 :: 		G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t2+0, 0
-	MOVWF      FARG_C4_time+0
-	MOVF       FARG_Pink_Soldiers_t2+1, 0
-	MOVWF      FARG_C4_time+1
-	CALL       _C4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_E4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_E4_time+1
-	CALL       _E4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_G4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_G4_time+1
-	CALL       _G4+0
-	MOVF       FARG_Pink_Soldiers_t1+0, 0
-	MOVWF      FARG_Gb4_time+0
-	MOVF       FARG_Pink_Soldiers_t1+1, 0
-	MOVWF      FARG_Gb4_time+1
-	CALL       _Gb4+0
-;Sonidos_Game.c,92 :: 		}
-L_end_Pink_Soldiers:
-	RETURN
-; end of _Pink_Soldiers
-
 _main:
 
-;Sonidos_Game.c,94 :: 		void main() {
-;Sonidos_Game.c,96 :: 		ANSEL  = 0;                        // Configure AN pins as digital
+;Sonidos_Game.c,128 :: 		void main() {
+;Sonidos_Game.c,130 :: 		ANSEL  = 0;                        // Configure AN pins as digital
 	CLRF       ANSEL+0
-;Sonidos_Game.c,97 :: 		ANSELH = 0;
+;Sonidos_Game.c,131 :: 		ANSELH = 0;
 	CLRF       ANSELH+0
-;Sonidos_Game.c,98 :: 		C1ON_bit = 0;                      // Disable comparators
+;Sonidos_Game.c,132 :: 		C1ON_bit = 0;                      // Disable comparators
 	BCF        C1ON_bit+0, BitPos(C1ON_bit+0)
-;Sonidos_Game.c,99 :: 		C2ON_bit = 0;
+;Sonidos_Game.c,133 :: 		C2ON_bit = 0;
 	BCF        C2ON_bit+0, BitPos(C2ON_bit+0)
-;Sonidos_Game.c,101 :: 		TRISB  = 0xF8;                     // Configure RB7..RB3 as input
-	MOVLW      248
-	MOVWF      TRISB+0
-;Sonidos_Game.c,103 :: 		Sound_Init(&PORTC, 3);
+;Sonidos_Game.c,135 :: 		TRISA  = 0xFF;                     // Configure RB7..RB3 as input    1111 1000
+	MOVLW      255
+	MOVWF      TRISA+0
+;Sonidos_Game.c,138 :: 		Sound_Init(&PORTC, 3);
 	MOVLW      PORTC+0
 	MOVWF      FARG_Sound_Init_snd_port+0
 	MOVLW      3
 	MOVWF      FARG_Sound_Init_snd_pin+0
 	CALL       _Sound_Init+0
-;Sonidos_Game.c,104 :: 		Sound_Play(500, 1000);             // Play sound at 880Hz for 1 second
-	MOVLW      244
-	MOVWF      FARG_Sound_Play_freq_in_hz+0
-	MOVLW      1
-	MOVWF      FARG_Sound_Play_freq_in_hz+1
-	MOVLW      232
-	MOVWF      FARG_Sound_Play_duration_ms+0
-	MOVLW      3
-	MOVWF      FARG_Sound_Play_duration_ms+1
-	CALL       _Sound_Play+0
-;Sonidos_Game.c,106 :: 		while (1) {
+;Sonidos_Game.c,140 :: 		Inicio(130);
+	MOVLW      130
+	MOVWF      FARG_Inicio_time+0
+	CLRF       FARG_Inicio_time+1
+	CALL       _Inicio+0
+;Sonidos_Game.c,142 :: 		while (1) {
 L_main0:
-;Sonidos_Game.c,107 :: 		if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
+;Sonidos_Game.c,144 :: 		if (Button(&PORTB,0,1,1)){        // RB0 plays "Red Light Green Light"
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
-	MOVLW      7
-	MOVWF      FARG_Button_pin+0
+	CLRF       FARG_Button_pin+0
 	MOVLW      1
 	MOVWF      FARG_Button_time_ms+0
 	MOVLW      1
@@ -839,19 +647,37 @@ L_main0:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main2
-;Sonidos_Game.c,108 :: 		Tone1();
-	CALL       _Tone1+0
-L_main2:
-;Sonidos_Game.c,109 :: 		while (RB7_bit) ;                // Wait for button to be released
+;Sonidos_Game.c,146 :: 		while (RB0_bit){
 L_main3:
-	BTFSS      RB7_bit+0, BitPos(RB7_bit+0)
+	BTFSS      RB0_bit+0, BitPos(RB0_bit+0)
 	GOTO       L_main4
+;Sonidos_Game.c,147 :: 		Red_Green();
+	CALL       _Red_Green+0
+;Sonidos_Game.c,148 :: 		Delay_ms(250);
+	MOVLW      3
+	MOVWF      R11+0
+	MOVLW      138
+	MOVWF      R12+0
+	MOVLW      85
+	MOVWF      R13+0
+L_main5:
+	DECFSZ     R13+0, 1
+	GOTO       L_main5
+	DECFSZ     R12+0, 1
+	GOTO       L_main5
+	DECFSZ     R11+0, 1
+	GOTO       L_main5
+	NOP
+	NOP
+;Sonidos_Game.c,149 :: 		}
 	GOTO       L_main3
 L_main4:
-;Sonidos_Game.c,111 :: 		if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
+;Sonidos_Game.c,150 :: 		}
+L_main2:
+;Sonidos_Game.c,152 :: 		if (Button(&PORTB,1,1,1)){        // RB1 plays a CLICK
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
-	MOVLW      6
+	MOVLW      1
 	MOVWF      FARG_Button_pin+0
 	MOVLW      1
 	MOVWF      FARG_Button_time_ms+0
@@ -860,20 +686,33 @@ L_main4:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main5
-;Sonidos_Game.c,112 :: 		Tone2();
-	CALL       _Tone2+0
-L_main5:
-;Sonidos_Game.c,113 :: 		while (RB6_bit) ;                // Wait for button to be released
-L_main6:
-	BTFSS      RB6_bit+0, BitPos(RB6_bit+0)
-	GOTO       L_main7
 	GOTO       L_main6
-L_main7:
-;Sonidos_Game.c,115 :: 		if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
+;Sonidos_Game.c,153 :: 		A4(200);
+	MOVLW      200
+	MOVWF      FARG_A4_time+0
+	CLRF       FARG_A4_time+1
+	CALL       _A4+0
+;Sonidos_Game.c,154 :: 		}
+L_main6:
+;Sonidos_Game.c,156 :: 		if (Button(&PORTB,2,1,1)){        // RB2 plays
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
-	MOVLW      5
+	MOVLW      2
+	MOVWF      FARG_Button_pin+0
+	MOVLW      1
+	MOVWF      FARG_Button_time_ms+0
+	MOVLW      1
+	MOVWF      FARG_Button_active_state+0
+	CALL       _Button+0
+	MOVF       R0+0, 0
+	BTFSC      STATUS+0, 2
+	GOTO       L_main7
+;Sonidos_Game.c,158 :: 		}
+L_main7:
+;Sonidos_Game.c,160 :: 		if (Button(&PORTB,3,1,1)){        // RB3 plays "Way back then"
+	MOVLW      PORTB+0
+	MOVWF      FARG_Button_port+0
+	MOVLW      3
 	MOVWF      FARG_Button_pin+0
 	MOVLW      1
 	MOVWF      FARG_Button_time_ms+0
@@ -883,25 +722,18 @@ L_main7:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main8
-;Sonidos_Game.c,117 :: 		while (RB5_bit){
+;Sonidos_Game.c,162 :: 		while (RB3_bit){
 L_main9:
-	BTFSS      RB5_bit+0, BitPos(RB5_bit+0)
+	BTFSS      RB3_bit+0, BitPos(RB3_bit+0)
 	GOTO       L_main10
-;Sonidos_Game.c,118 :: 		Pink_Soldiers(550,250);
-	MOVLW      38
-	MOVWF      FARG_Pink_Soldiers_t1+0
-	MOVLW      2
-	MOVWF      FARG_Pink_Soldiers_t1+1
-	MOVLW      250
-	MOVWF      FARG_Pink_Soldiers_t2+0
-	CLRF       FARG_Pink_Soldiers_t2+1
-	CALL       _Pink_Soldiers+0
-;Sonidos_Game.c,119 :: 		}
+;Sonidos_Game.c,163 :: 		SquidGame();
+	CALL       _SquidGame+0
+;Sonidos_Game.c,165 :: 		}
 	GOTO       L_main9
 L_main10:
-;Sonidos_Game.c,120 :: 		}
+;Sonidos_Game.c,166 :: 		}
 L_main8:
-;Sonidos_Game.c,122 :: 		if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
+;Sonidos_Game.c,168 :: 		if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      4
@@ -914,13 +746,13 @@ L_main8:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main11
-;Sonidos_Game.c,124 :: 		while (RB4_bit){
+;Sonidos_Game.c,170 :: 		while (RB4_bit){
 L_main12:
 	BTFSS      RB4_bit+0, BitPos(RB4_bit+0)
 	GOTO       L_main13
-;Sonidos_Game.c,125 :: 		Red_Green();
-	CALL       _Red_Green+0
-;Sonidos_Game.c,126 :: 		Delay_ms(500);
+;Sonidos_Game.c,171 :: 		SquidGame();
+	CALL       _SquidGame+0
+;Sonidos_Game.c,172 :: 		Delay_ms(500);
 	MOVLW      6
 	MOVWF      R11+0
 	MOVLW      19
@@ -936,15 +768,15 @@ L_main14:
 	GOTO       L_main14
 	NOP
 	NOP
-;Sonidos_Game.c,127 :: 		}
+;Sonidos_Game.c,173 :: 		}
 	GOTO       L_main12
 L_main13:
-;Sonidos_Game.c,128 :: 		}
+;Sonidos_Game.c,174 :: 		}
 L_main11:
-;Sonidos_Game.c,130 :: 		if (Button(&PORTB,3,1,1)){        // RB3 plays "Way back then"
+;Sonidos_Game.c,176 :: 		if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
-	MOVLW      3
+	MOVLW      5
 	MOVWF      FARG_Button_pin+0
 	MOVLW      1
 	MOVWF      FARG_Button_time_ms+0
@@ -954,20 +786,62 @@ L_main11:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main15
-;Sonidos_Game.c,132 :: 		while (RB3_bit){
+;Sonidos_Game.c,178 :: 		while (RB5_bit){
 L_main16:
-	BTFSS      RB3_bit+0, BitPos(RB3_bit+0)
+	BTFSS      RB5_bit+0, BitPos(RB5_bit+0)
 	GOTO       L_main17
-;Sonidos_Game.c,133 :: 		SquidGame();
-	CALL       _SquidGame+0
-;Sonidos_Game.c,135 :: 		}
+;Sonidos_Game.c,180 :: 		}
 	GOTO       L_main16
 L_main17:
-;Sonidos_Game.c,136 :: 		}
+;Sonidos_Game.c,181 :: 		}
 L_main15:
-;Sonidos_Game.c,137 :: 		}
+;Sonidos_Game.c,183 :: 		if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
+	MOVLW      PORTB+0
+	MOVWF      FARG_Button_port+0
+	MOVLW      6
+	MOVWF      FARG_Button_pin+0
+	MOVLW      1
+	MOVWF      FARG_Button_time_ms+0
+	MOVLW      1
+	MOVWF      FARG_Button_active_state+0
+	CALL       _Button+0
+	MOVF       R0+0, 0
+	BTFSC      STATUS+0, 2
+	GOTO       L_main18
+;Sonidos_Game.c,184 :: 		Tone2();
+	CALL       _Tone2+0
+L_main18:
+;Sonidos_Game.c,185 :: 		while (RB6_bit) ;                // Wait for button to be released
+L_main19:
+	BTFSS      RB6_bit+0, BitPos(RB6_bit+0)
+	GOTO       L_main20
+	GOTO       L_main19
+L_main20:
+;Sonidos_Game.c,187 :: 		if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
+	MOVLW      PORTB+0
+	MOVWF      FARG_Button_port+0
+	MOVLW      7
+	MOVWF      FARG_Button_pin+0
+	MOVLW      1
+	MOVWF      FARG_Button_time_ms+0
+	MOVLW      1
+	MOVWF      FARG_Button_active_state+0
+	CALL       _Button+0
+	MOVF       R0+0, 0
+	BTFSC      STATUS+0, 2
+	GOTO       L_main21
+;Sonidos_Game.c,188 :: 		Tone1();
+	CALL       _Tone1+0
+L_main21:
+;Sonidos_Game.c,189 :: 		while (RB7_bit) ;                // Wait for button to be released
+L_main22:
+	BTFSS      RB7_bit+0, BitPos(RB7_bit+0)
+	GOTO       L_main23
+	GOTO       L_main22
+L_main23:
+;Sonidos_Game.c,190 :: 		}
 	GOTO       L_main0
-;Sonidos_Game.c,138 :: 		}
+;Sonidos_Game.c,191 :: 		}
 L_end_main:
 	GOTO       $+0
 ; end of _main

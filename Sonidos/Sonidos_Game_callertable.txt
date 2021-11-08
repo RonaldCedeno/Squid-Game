@@ -1,56 +1,57 @@
 main
 	Sound_Init
-	Sound_Play
-		Get_Fosc_kHz
-		Mul_32x32_U
-		Div_32x32_U
-		Div_16X16_U
-		Delay_Cyc
+	Inicio
+		F6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		GB6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		G6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		Ab6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		A6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		ToneB6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
+		C6
+			Sound_Play
+				Get_Fosc_kHz
+				Mul_32x32_U
+				Div_32x32_U
+				Div_16X16_U
+				Delay_Cyc
 	Button
 		Delay_500us
-	Tone1
-		Sound_Play
-			Get_Fosc_kHz
-			Mul_32x32_U
-			Div_32x32_U
-			Div_16X16_U
-			Delay_Cyc
-	Tone2
-		Sound_Play
-			Get_Fosc_kHz
-			Mul_32x32_U
-			Div_32x32_U
-			Div_16X16_U
-			Delay_Cyc
-	Pink_Soldiers
-		G4
-			Sound_Play
-				Get_Fosc_kHz
-				Mul_32x32_U
-				Div_32x32_U
-				Div_16X16_U
-				Delay_Cyc
-		E4
-			Sound_Play
-				Get_Fosc_kHz
-				Mul_32x32_U
-				Div_32x32_U
-				Div_16X16_U
-				Delay_Cyc
-		Gb4
-			Sound_Play
-				Get_Fosc_kHz
-				Mul_32x32_U
-				Div_32x32_U
-				Div_16X16_U
-				Delay_Cyc
-		C4
-			Sound_Play
-				Get_Fosc_kHz
-				Mul_32x32_U
-				Div_32x32_U
-				Div_16X16_U
-				Delay_Cyc
 	Red_Green
 		ToneB3
 			Sound_Play
@@ -73,6 +74,13 @@ main
 				Div_32x32_U
 				Div_16X16_U
 				Delay_Cyc
+	A4
+		Sound_Play
+			Get_Fosc_kHz
+			Mul_32x32_U
+			Div_32x32_U
+			Div_16X16_U
+			Delay_Cyc
 	SquidGame
 		ToneB4
 			Sound_Play
@@ -116,3 +124,17 @@ main
 				Div_32x32_U
 				Div_16X16_U
 				Delay_Cyc
+	Tone2
+		Sound_Play
+			Get_Fosc_kHz
+			Mul_32x32_U
+			Div_32x32_U
+			Div_16X16_U
+			Delay_Cyc
+	Tone1
+		Sound_Play
+			Get_Fosc_kHz
+			Mul_32x32_U
+			Div_32x32_U
+			Div_16X16_U
+			Delay_Cyc

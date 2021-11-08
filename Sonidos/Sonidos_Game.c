@@ -54,6 +54,34 @@ void C4 (int time) {
    Sound_Play(262,time);
 }
 
+void F6 (int time) {
+   Sound_Play(1397,time);
+}
+
+void GB6 (int time) {
+   Sound_Play(1480, time);
+}
+
+void G6 (int time) {
+   Sound_Play(1568, time);
+}
+
+void Ab6 (int time) {
+   Sound_Play(1661, time);
+}
+
+void A6 (int time) {
+   Sound_Play(1760, time);
+}
+
+void ToneB6 (int time) {
+   Sound_Play(1976, time);
+}
+
+void C6 (int time) {
+   Sound_Play(1047, time);
+}
+
 //Espacio
 void espacio () {
    Sound_Play(0,50);
@@ -61,6 +89,10 @@ void espacio () {
 
 void Delay_ms(const unsigned long time_in_ms);
 
+
+void Inicio (int time){
+   F6(time);GB6(time);G6(time);Ab6(time);A6(time);ToneB6(time);C6(time);
+}
 
 //Melodia de Squid Game
 void SquidGame (){
@@ -80,7 +112,9 @@ void Red_Green() {
    E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
 }
 
-void Pink_Soldiers(int t1, int t2){
+
+
+/*void Pink_Soldiers(int t1, int t2){
    G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
    G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
    G4(t1);C4(t1);G4(t1);C4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
@@ -89,7 +123,7 @@ void Pink_Soldiers(int t1, int t2){
    G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
    G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
    G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-}
+}                */
 
 void main() {
 
@@ -97,36 +131,32 @@ void main() {
   ANSELH = 0;
   C1ON_bit = 0;                      // Disable comparators
   C2ON_bit = 0;
-
-  TRISB  = 0xF8;                     // Configure RB7..RB3 as input
+  
+  TRISA  = 0xFF;                     // Configure RB7..RB3 as input    1111 1000
+  //TRISD  = 0xFF;                     // Configure RB7..RB3 as input    1111 1000
 
   Sound_Init(&PORTC, 3);
-  Sound_Play(500, 1000);             // Play sound at 880Hz for 1 second
-
+  //Sound_Play(500, 1000); // Play sound at 880Hz for 1 second
+  Inicio(130);
+  
   while (1) {
-    if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
-      Tone1();
-    while (RB7_bit) ;                // Wait for button to be released
-
-    if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
-      Tone2();
-    while (RB6_bit) ;                // Wait for button to be released
-
-    if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
+  
+    if (Button(&PORTB,0,1,1)){        // RB0 plays "Red Light Green Light"
       // Wait for button to be released
-      while (RB5_bit){
-            Pink_Soldiers(550,250);
-      }
-    }
-
-    if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
-      // Wait for button to be released
-      while (RB4_bit){
+      while (RB0_bit){
             Red_Green();
-            Delay_ms(500);
+            Delay_ms(250);
       }
     }
+    
+    if (Button(&PORTB,1,1,1)){        // RB1 plays a CLICK
+      A4(200);
+    }
+    
+    if (Button(&PORTB,2,1,1)){        // RB2 plays
 
+    }
+    
     if (Button(&PORTB,3,1,1)){        // RB3 plays "Way back then"
       // Wait for button to be released
       while (RB3_bit){
@@ -134,5 +164,28 @@ void main() {
             //Delay_ms(250);
       }
     }
+    
+    if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
+      // Wait for button to be released
+      while (RB4_bit){
+            SquidGame();
+            Delay_ms(500);
+      }
+    }
+
+    if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
+      // Wait for button to be released
+      while (RB5_bit){
+            /*Pink_Soldiers(550,250); */
+      }
+    }
+    
+    if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
+      Tone2();
+    while (RB6_bit) ;                // Wait for button to be released
+    
+    if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
+      Tone1();
+    while (RB7_bit) ;                // Wait for button to be released
   }
 }

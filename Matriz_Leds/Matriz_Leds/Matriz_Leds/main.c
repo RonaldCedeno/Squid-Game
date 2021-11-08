@@ -53,8 +53,18 @@ void hola(char PORT[], char MENSAJE[]) {
 	//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
 	for (int i=0;i<32;i++)
 	{
-		filas(i,20,PORT,MENSAJE);
+		filas(i,10,PORT,MENSAJE);
 	}
+}
+
+void squid_game(char PORT[], char SQUID_GAME[]) {
+	PORTC = ((1<<3));
+	//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
+	for (int i=0;i<80;i++)
+	{
+		filas(i,10,PORT,SQUID_GAME);
+	}
+	PORTC = ((0<<3));
 }
 
 void numero3(char PORT[], char NUMERO3[]){
@@ -81,6 +91,7 @@ int main(void)
 	
 	// PARA LAS BOTONERAS
 	DDRC |= (0<<0)|(0<<1)|(0<<2); //ENTRADAS PARA LOS PUERTOS C0,C1,C2
+	DDRC |= (1<<3)|(1<<4); //SALIDA PARA EL PUERTO C3 MUSICA RED LIGHT GREEN LIGHT, C4 CLICK
 		
 	//UART_init();
 	
@@ -89,6 +100,19 @@ int main(void)
 	//{PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7}
 	
 	 
+	char SQUID_GAME[]={0x0, 0x44, 0x4A, 0x4A, 0x4A, 0x4A, 0x32, 0x0, //S
+		0x0, 0x3C, 0x42, 0x42, 0x22, 0x5C, 0x0, 0x0, //Q
+		0x0, 0x3E, 0x40, 0x40, 0x40, 0x40, 0x3E, 0x0, //U
+		0x0, 0x42, 0x42, 0x7E, 0x7E, 0x42, 0x42, 0x0, //I
+		0x0, 0x7E, 0x42, 0x42, 0x42, 0x42, 0x3C, 0x0, //D
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //ESPACIO
+		0x0, 0x7E, 0x42, 0x52, 0x52, 0x52, 0x72, 0x0, //G
+		0x0, 0x78, 0x14, 0x12, 0x12, 0x14, 0x78, 0x0, //A
+		0x0, 0x7E, 0x04, 0x08, 0x08, 0x04, 0x7E, 0x0, //M
+		0x0, 0x7E, 0x4A, 0x4A, 0x4A, 0x42, 0x42, 0x0, //E
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //ESPACIO
+	}; 
+	
 	char MENSAJE[]={0x0, 0x7e, 0x7e, 0x18, 0x18, 0x7e, 0x7e, 0x0, //H
 		0x0, 0x7e, 0x7e, 0x66, 0x66, 0x7e, 0x7e, 0x0, //O
 		0x0, 0x7e, 0x7e, 0x60, 0x60, 0x60, 0x60, 0x0, //L
@@ -120,6 +144,8 @@ int main(void)
 	};
 	
 	
+	
+	
 	int inicio = 0;
 	int valor3 = 1;
 	int valor4 = 1;
@@ -140,17 +166,9 @@ int main(void)
 				inicio = 1;
 				break;
 			}
-			/*if (PINC == 0x41) {
-				while (PINC == 0x41){
-					animacion1(PORT,ANIMACION1);
-					animacion2(PORT,ANIMACION2);
-				}
-				inicio = 1;
-				break;
-			}*/
 		}
 		
-		hola(PORT,MENSAJE);
+		squid_game(PORT,SQUID_GAME);
 		
 		/* EMPIEZA LA SELECCION DE CANTIDAD DE JUGADORES CON:
 		DERECHA: 0B 0100 0010
@@ -162,10 +180,18 @@ int main(void)
 			numero3(PORT,NUMERO3);
 			// SI PRESIONA PARA LA DERECHA
 			if (PINC == 0x42) {
+				// SONIDO DEL CLICK
+				PORTC = ((1<<4));
+				_delay_ms(0.25);
+				PORTC = ((0<<4));
 				while (valor4) {
 					numero4(PORT,NUMERO4);
 					// SI PRESIONA PARA LA IZQUIERDA
 					if (PINC == 0x44) {
+						// SONIDO DEL CLICK
+						PORTC = ((1<<4));
+						_delay_ms(0.25);
+						PORTC = ((0<<4));
 						break;
 					}
 					// SI SELECCIONA LA OPCION DE 4 JUGADORES
@@ -182,7 +208,6 @@ int main(void)
 				break;
 			}
 		}
-		
 		valor3 = 0;
 		
 		

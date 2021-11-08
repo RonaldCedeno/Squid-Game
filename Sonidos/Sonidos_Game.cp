@@ -55,6 +55,34 @@ void C4 (int time) {
  Sound_Play(262,time);
 }
 
+void F6 (int time) {
+ Sound_Play(1397,time);
+}
+
+void GB6 (int time) {
+ Sound_Play(1480, time);
+}
+
+void G6 (int time) {
+ Sound_Play(1568, time);
+}
+
+void Ab6 (int time) {
+ Sound_Play(1661, time);
+}
+
+void A6 (int time) {
+ Sound_Play(1760, time);
+}
+
+void ToneB6 (int time) {
+ Sound_Play(1976, time);
+}
+
+void C6 (int time) {
+ Sound_Play(1047, time);
+}
+
 
 void espacio () {
  Sound_Play(0,50);
@@ -63,9 +91,13 @@ void espacio () {
 void Delay_ms(const unsigned long time_in_ms);
 
 
+void Inicio (int time){
+ F6(time);GB6(time);G6(time);Ab6(time);A6(time);ToneB6(time);C6(time);
+}
+
 
 void SquidGame (){
-#line 72 "C:/Users/ronal/OneDrive/Documentos/Squid-Game/Sonidos/Sonidos_Game.c"
+#line 104 "C:/Users/ronal/OneDrive/Documentos/Squid-Game/Sonidos/Sonidos_Game.c"
  ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio(); ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
  Eb5(300);espacio();ToneB4(300);espacio();ToneB4(300);espacio();A4(300);espacio();G4(300);espacio();A4(300);espacio();ToneB4(600);espacio();
  ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio(); ToneB4(300);espacio();ToneB4(300);espacio();ToneB4(600);espacio();
@@ -76,18 +108,7 @@ void Red_Green() {
  ToneB3(300);E4(300);E4(600);E4(600);D4(650);
  E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
 }
-
-void Pink_Soldiers(int t1, int t2){
- G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);C4(t1);G4(t1);C4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t2);C4(t2);G4(t1);GB4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
- G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-}
-
+#line 128 "C:/Users/ronal/OneDrive/Documentos/Squid-Game/Sonidos/Sonidos_Game.c"
 void main() {
 
  ANSEL = 0;
@@ -95,33 +116,29 @@ void main() {
  C1ON_bit = 0;
  C2ON_bit = 0;
 
- TRISB = 0xF8;
+ TRISA = 0xFF;
+
 
  Sound_Init(&PORTC, 3);
- Sound_Play(500, 1000);
+
+ Inicio(130);
 
  while (1) {
- if (Button(&PORTB,7,1,1))
- Tone1();
- while (RB7_bit) ;
 
- if (Button(&PORTB,6,1,1))
- Tone2();
- while (RB6_bit) ;
+ if (Button(&PORTB,0,1,1)){
 
- if (Button(&PORTB,5,1,1)){
-
- while (RB5_bit){
- Pink_Soldiers(550,250);
- }
- }
-
- if (Button(&PORTB,4,1,1)){
-
- while (RB4_bit){
+ while (RB0_bit){
  Red_Green();
- Delay_ms(500);
+ Delay_ms(250);
  }
+ }
+
+ if (Button(&PORTB,1,1,1)){
+ A4(200);
+ }
+
+ if (Button(&PORTB,2,1,1)){
+
  }
 
  if (Button(&PORTB,3,1,1)){
@@ -131,5 +148,28 @@ void main() {
 
  }
  }
+
+ if (Button(&PORTB,4,1,1)){
+
+ while (RB4_bit){
+ SquidGame();
+ Delay_ms(500);
+ }
+ }
+
+ if (Button(&PORTB,5,1,1)){
+
+ while (RB5_bit){
+
+ }
+ }
+
+ if (Button(&PORTB,6,1,1))
+ Tone2();
+ while (RB6_bit) ;
+
+ if (Button(&PORTB,7,1,1))
+ Tone1();
+ while (RB7_bit) ;
  }
 }
