@@ -610,32 +610,32 @@ L_end_Red_Green:
 
 _main:
 
-;Sonidos_Game.c,128 :: 		void main() {
-;Sonidos_Game.c,130 :: 		ANSEL  = 0;                        // Configure AN pins as digital
+;Sonidos_Game.c,115 :: 		void main() {
+;Sonidos_Game.c,117 :: 		ANSEL  = 0;                        // Configure AN pins as digital
 	CLRF       ANSEL+0
-;Sonidos_Game.c,131 :: 		ANSELH = 0;
+;Sonidos_Game.c,118 :: 		ANSELH = 0;
 	CLRF       ANSELH+0
-;Sonidos_Game.c,132 :: 		C1ON_bit = 0;                      // Disable comparators
+;Sonidos_Game.c,119 :: 		C1ON_bit = 0;                      // Disable comparators
 	BCF        C1ON_bit+0, BitPos(C1ON_bit+0)
-;Sonidos_Game.c,133 :: 		C2ON_bit = 0;
+;Sonidos_Game.c,120 :: 		C2ON_bit = 0;
 	BCF        C2ON_bit+0, BitPos(C2ON_bit+0)
-;Sonidos_Game.c,135 :: 		TRISA  = 0xFF;                     // Configure RB7..RB3 as input    1111 1000
+;Sonidos_Game.c,122 :: 		TRISA  = 0xFF;                     // Configure RB7..RB3 as input    1111 1000
 	MOVLW      255
 	MOVWF      TRISA+0
-;Sonidos_Game.c,138 :: 		Sound_Init(&PORTC, 3);
+;Sonidos_Game.c,125 :: 		Sound_Init(&PORTC, 3);
 	MOVLW      PORTC+0
 	MOVWF      FARG_Sound_Init_snd_port+0
 	MOVLW      3
 	MOVWF      FARG_Sound_Init_snd_pin+0
 	CALL       _Sound_Init+0
-;Sonidos_Game.c,140 :: 		Inicio(130);
+;Sonidos_Game.c,127 :: 		Inicio(130);
 	MOVLW      130
 	MOVWF      FARG_Inicio_time+0
 	CLRF       FARG_Inicio_time+1
 	CALL       _Inicio+0
-;Sonidos_Game.c,142 :: 		while (1) {
+;Sonidos_Game.c,129 :: 		while (1) {
 L_main0:
-;Sonidos_Game.c,144 :: 		if (Button(&PORTB,0,1,1)){        // RB0 plays "Red Light Green Light"
+;Sonidos_Game.c,131 :: 		if (Button(&PORTB,0,1,1)){        // RB0 plays "Red Light Green Light"
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	CLRF       FARG_Button_pin+0
@@ -647,13 +647,13 @@ L_main0:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main2
-;Sonidos_Game.c,146 :: 		while (RB0_bit){
+;Sonidos_Game.c,133 :: 		while (RB0_bit){
 L_main3:
 	BTFSS      RB0_bit+0, BitPos(RB0_bit+0)
 	GOTO       L_main4
-;Sonidos_Game.c,147 :: 		Red_Green();
+;Sonidos_Game.c,134 :: 		Red_Green();
 	CALL       _Red_Green+0
-;Sonidos_Game.c,148 :: 		Delay_ms(250);
+;Sonidos_Game.c,135 :: 		Delay_ms(250);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
@@ -669,12 +669,12 @@ L_main5:
 	GOTO       L_main5
 	NOP
 	NOP
-;Sonidos_Game.c,149 :: 		}
+;Sonidos_Game.c,136 :: 		}
 	GOTO       L_main3
 L_main4:
-;Sonidos_Game.c,150 :: 		}
+;Sonidos_Game.c,137 :: 		}
 L_main2:
-;Sonidos_Game.c,152 :: 		if (Button(&PORTB,1,1,1)){        // RB1 plays a CLICK
+;Sonidos_Game.c,139 :: 		if (Button(&PORTB,1,1,1)){        // RB1 plays a CLICK
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      1
@@ -687,14 +687,14 @@ L_main2:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main6
-;Sonidos_Game.c,153 :: 		A4(200);
+;Sonidos_Game.c,140 :: 		A4(200);
 	MOVLW      200
 	MOVWF      FARG_A4_time+0
 	CLRF       FARG_A4_time+1
 	CALL       _A4+0
-;Sonidos_Game.c,154 :: 		}
+;Sonidos_Game.c,141 :: 		}
 L_main6:
-;Sonidos_Game.c,156 :: 		if (Button(&PORTB,2,1,1)){        // RB2 plays
+;Sonidos_Game.c,143 :: 		if (Button(&PORTB,2,1,1)){        // RB2 plays "Way back then"
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      2
@@ -707,9 +707,18 @@ L_main6:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main7
-;Sonidos_Game.c,158 :: 		}
+;Sonidos_Game.c,145 :: 		while (RB2_bit){
+L_main8:
+	BTFSS      RB2_bit+0, BitPos(RB2_bit+0)
+	GOTO       L_main9
+;Sonidos_Game.c,146 :: 		SquidGame();
+	CALL       _SquidGame+0
+;Sonidos_Game.c,148 :: 		}
+	GOTO       L_main8
+L_main9:
+;Sonidos_Game.c,149 :: 		}
 L_main7:
-;Sonidos_Game.c,160 :: 		if (Button(&PORTB,3,1,1)){        // RB3 plays "Way back then"
+;Sonidos_Game.c,151 :: 		if (Button(&PORTB,3,1,1)){        // RB3 plays
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      3
@@ -721,19 +730,19 @@ L_main7:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main8
-;Sonidos_Game.c,162 :: 		while (RB3_bit){
-L_main9:
-	BTFSS      RB3_bit+0, BitPos(RB3_bit+0)
 	GOTO       L_main10
-;Sonidos_Game.c,163 :: 		SquidGame();
+;Sonidos_Game.c,153 :: 		while (RB3_bit){
+L_main11:
+	BTFSS      RB3_bit+0, BitPos(RB3_bit+0)
+	GOTO       L_main12
+;Sonidos_Game.c,154 :: 		SquidGame();
 	CALL       _SquidGame+0
-;Sonidos_Game.c,165 :: 		}
-	GOTO       L_main9
+;Sonidos_Game.c,156 :: 		}
+	GOTO       L_main11
+L_main12:
+;Sonidos_Game.c,157 :: 		}
 L_main10:
-;Sonidos_Game.c,166 :: 		}
-L_main8:
-;Sonidos_Game.c,168 :: 		if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
+;Sonidos_Game.c,159 :: 		if (Button(&PORTB,4,1,1)){        // RB4 plays
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      4
@@ -745,35 +754,35 @@ L_main8:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main11
-;Sonidos_Game.c,170 :: 		while (RB4_bit){
-L_main12:
-	BTFSS      RB4_bit+0, BitPos(RB4_bit+0)
 	GOTO       L_main13
-;Sonidos_Game.c,171 :: 		SquidGame();
+;Sonidos_Game.c,161 :: 		while (RB4_bit){
+L_main14:
+	BTFSS      RB4_bit+0, BitPos(RB4_bit+0)
+	GOTO       L_main15
+;Sonidos_Game.c,162 :: 		SquidGame();
 	CALL       _SquidGame+0
-;Sonidos_Game.c,172 :: 		Delay_ms(500);
+;Sonidos_Game.c,163 :: 		Delay_ms(500);
 	MOVLW      6
 	MOVWF      R11+0
 	MOVLW      19
 	MOVWF      R12+0
 	MOVLW      173
 	MOVWF      R13+0
-L_main14:
+L_main16:
 	DECFSZ     R13+0, 1
-	GOTO       L_main14
+	GOTO       L_main16
 	DECFSZ     R12+0, 1
-	GOTO       L_main14
+	GOTO       L_main16
 	DECFSZ     R11+0, 1
+	GOTO       L_main16
+	NOP
+	NOP
+;Sonidos_Game.c,164 :: 		}
 	GOTO       L_main14
-	NOP
-	NOP
-;Sonidos_Game.c,173 :: 		}
-	GOTO       L_main12
+L_main15:
+;Sonidos_Game.c,165 :: 		}
 L_main13:
-;Sonidos_Game.c,174 :: 		}
-L_main11:
-;Sonidos_Game.c,176 :: 		if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
+;Sonidos_Game.c,167 :: 		if (Button(&PORTB,5,1,1)){       // RB5 plays
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      5
@@ -785,17 +794,17 @@ L_main11:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main15
-;Sonidos_Game.c,178 :: 		while (RB5_bit){
-L_main16:
-	BTFSS      RB5_bit+0, BitPos(RB5_bit+0)
 	GOTO       L_main17
-;Sonidos_Game.c,180 :: 		}
-	GOTO       L_main16
+;Sonidos_Game.c,169 :: 		while (RB5_bit){
+L_main18:
+	BTFSS      RB5_bit+0, BitPos(RB5_bit+0)
+	GOTO       L_main19
+;Sonidos_Game.c,171 :: 		}
+	GOTO       L_main18
+L_main19:
+;Sonidos_Game.c,172 :: 		}
 L_main17:
-;Sonidos_Game.c,181 :: 		}
-L_main15:
-;Sonidos_Game.c,183 :: 		if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
+;Sonidos_Game.c,174 :: 		if (Button(&PORTB,6,1,1))        // RB6 plays Tone2
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      6
@@ -807,17 +816,17 @@ L_main15:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main18
-;Sonidos_Game.c,184 :: 		Tone2();
-	CALL       _Tone2+0
-L_main18:
-;Sonidos_Game.c,185 :: 		while (RB6_bit) ;                // Wait for button to be released
-L_main19:
-	BTFSS      RB6_bit+0, BitPos(RB6_bit+0)
 	GOTO       L_main20
-	GOTO       L_main19
+;Sonidos_Game.c,175 :: 		Tone2();
+	CALL       _Tone2+0
 L_main20:
-;Sonidos_Game.c,187 :: 		if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
+;Sonidos_Game.c,176 :: 		while (RB6_bit) ;                // Wait for button to be released
+L_main21:
+	BTFSS      RB6_bit+0, BitPos(RB6_bit+0)
+	GOTO       L_main22
+	GOTO       L_main21
+L_main22:
+;Sonidos_Game.c,178 :: 		if (Button(&PORTB,7,1,1))        // RB7 plays Tone1
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      7
@@ -829,19 +838,19 @@ L_main20:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main21
-;Sonidos_Game.c,188 :: 		Tone1();
-	CALL       _Tone1+0
-L_main21:
-;Sonidos_Game.c,189 :: 		while (RB7_bit) ;                // Wait for button to be released
-L_main22:
-	BTFSS      RB7_bit+0, BitPos(RB7_bit+0)
 	GOTO       L_main23
-	GOTO       L_main22
+;Sonidos_Game.c,179 :: 		Tone1();
+	CALL       _Tone1+0
 L_main23:
-;Sonidos_Game.c,190 :: 		}
+;Sonidos_Game.c,180 :: 		while (RB7_bit) ;                // Wait for button to be released
+L_main24:
+	BTFSS      RB7_bit+0, BitPos(RB7_bit+0)
+	GOTO       L_main25
+	GOTO       L_main24
+L_main25:
+;Sonidos_Game.c,181 :: 		}
 	GOTO       L_main0
-;Sonidos_Game.c,191 :: 		}
+;Sonidos_Game.c,182 :: 		}
 L_end_main:
 	GOTO       $+0
 ; end of _main

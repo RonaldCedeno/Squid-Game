@@ -108,7 +108,7 @@ void Red_Green() {
  ToneB3(300);E4(300);E4(600);E4(600);D4(650);
  E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
 }
-#line 128 "C:/Users/ronal/OneDrive/Documentos/Squid-Game/Sonidos/Sonidos_Game.c"
+
 void main() {
 
  ANSEL = 0;
@@ -139,6 +139,10 @@ void main() {
 
  if (Button(&PORTB,2,1,1)){
 
+ while (RB2_bit){
+ SquidGame();
+
+ }
  }
 
  if (Button(&PORTB,3,1,1)){

@@ -112,19 +112,6 @@ void Red_Green() {
    E4(300);E4(300);ToneB3(300);ToneB3(300);D4(650);
 }
 
-
-
-/*void Pink_Soldiers(int t1, int t2){
-   G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);C4(t1);G4(t1);C4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t1);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t2);C4(t2);G4(t1);GB4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-   G4(t1);E4(t2);C4(t2);G4(t1);E4(t1);G4(t1);GB4(t1);G4(t1);GB4(t1);
-}                */
-
 void main() {
 
   ANSEL  = 0;                        // Configure AN pins as digital
@@ -153,11 +140,15 @@ void main() {
       A4(200);
     }
     
-    if (Button(&PORTB,2,1,1)){        // RB2 plays
-
+    if (Button(&PORTB,2,1,1)){        // RB2 plays "Way back then"
+       // Wait for button to be released
+      while (RB2_bit){
+            SquidGame();
+            //Delay_ms(250);
+      }
     }
     
-    if (Button(&PORTB,3,1,1)){        // RB3 plays "Way back then"
+    if (Button(&PORTB,3,1,1)){        // RB3 plays
       // Wait for button to be released
       while (RB3_bit){
             SquidGame();
@@ -165,7 +156,7 @@ void main() {
       }
     }
     
-    if (Button(&PORTB,4,1,1)){        // RB4 plays "Red Light Green Light"
+    if (Button(&PORTB,4,1,1)){        // RB4 plays
       // Wait for button to be released
       while (RB4_bit){
             SquidGame();
@@ -173,10 +164,10 @@ void main() {
       }
     }
 
-    if (Button(&PORTB,5,1,1)){       // RB5 plays "Pink Soldiers"
+    if (Button(&PORTB,5,1,1)){       // RB5 plays
       // Wait for button to be released
       while (RB5_bit){
-            /*Pink_Soldiers(550,250); */
+
       }
     }
     

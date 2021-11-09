@@ -1,12 +1,6 @@
-/*
- * Matriz_Leds.c
- *
- * Created: 11/7/2021 9:42:33 PM
- * Author : Ronald
- */ 
-
 #define F_CPU 8000000
 #include <stdlib.h>
+#include <math.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include "UART.h"
@@ -27,6 +21,7 @@ void filas(int i, int velocidad, char PORT[], char FORMA[]){
 	}
 }
 
+// ANIMACION DEL ENCENDIDO DEL JUEGO
 void animacion1(char PORT[], char ANIMACION1[]) {
 	// CANTIDAD DE FILAS -1
 	for (int i=0;i<=24;i+=8)// PARA ABRIR LA ANIMACION
@@ -39,6 +34,7 @@ void animacion1(char PORT[], char ANIMACION1[]) {
 	}
 }
 
+// ANIMACION DEL ENCENDIDO DEL JUEGO
 void animacion2(char PORT[], char ANIMACION2[]) {
 	// CANTIDAD DE FILAS -1
 	for (int i=0;i<=24;i+=8)// PARA ABRIR LA ANIMACION
@@ -154,6 +150,23 @@ void seleccion_orden(int valor, char PORT[], char UNO[], char DOS[], char TRES[]
 	}
 }
 
+void piso(char PORT[], char PISO[]){
+	for (int i=0;i<8;i+=8)
+	{
+		filas(i,10,PORT,PISO);
+	}
+}
+
+void ganaste(char PORT[], char GANASTE[]) {
+	//MENSAJE DE VICTORIA
+	PORTC = ((1<<5));
+	for (int i=0;i<56;i++)
+	{
+		filas(i,10,PORT,GANASTE);
+	}
+	PORTC = ((1<<5));
+}
+
 int main(void)
 {
 	// PARA EL DATO
@@ -164,7 +177,7 @@ int main(void)
 	
 	// PARA LAS BOTONERAS
 	DDRC |= (0<<0)|(0<<1)|(0<<2); //ENTRADAS PARA LOS PUERTOS C0,C1,C2
-	DDRC |= (1<<3)|(1<<4); //SALIDA PARA EL PUERTO C3 MUSICA RED LIGHT GREEN LIGHT, C4 CLICK
+	DDRC |= (1<<3)|(1<<4)|(1<<5); //SALIDA PARA EL PUERTO C3 MUSICA RED LIGHT GREEN LIGHT, C4 CLICK, y C5 VICTORIA
 		
 	//UART_init();
 	
@@ -172,7 +185,13 @@ int main(void)
 	char PORT[8] =  {1,2,4,8,16,32,64,128};//VALORES DE PINES DEL PORTD
 	//{PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7}
 	
-	 
+	// VALORES DE LA ELIMINACION DE CADA PISO DE ABAJO HACIA ARRIBA
+	char PISO_FUERA[8] = {127,191,223,239,247,251,253,254};
+		
+	// UBICACIONES
+	char UBICACION_SUPERIOR[2] = {129,80};
+	char UBICACION_INFERIOR[2] = {129,1};
+	
 	char SQUID_GAME[]={0x0, 0x44, 0x4A, 0x4A, 0x4A, 0x4A, 0x32, 0x0, //S
 		0x0, 0x3C, 0x42, 0x42, 0x22, 0x5C, 0x0, 0x0, //Q
 		0x0, 0x3E, 0x40, 0x40, 0x40, 0x40, 0x3E, 0x0, //U
@@ -252,6 +271,21 @@ int main(void)
 		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 	};
 	
+	char PISO[] = {
+		0,0,0,0,0,0,0,0
+	};
+	
+	char GANASTE[] = {
+		0x0, 0x7E, 0x42, 0x52, 0x52, 0x52, 0x72, 0x0, //G
+		0x0, 0x78, 0x14, 0x12, 0x12, 0x14, 0x78, 0x0, //A
+		0x0, 0x7E, 0x04, 0x08, 0x10, 0x20, 0x7E, 0x0, //N
+		0x0, 0x78, 0x14, 0x12, 0x12, 0x14, 0x78, 0x0, //A
+		0x0, 0x44, 0x4A, 0x4A, 0x4A, 0x4A, 0x32, 0x0, //S
+		0x0, 0x02, 0x02, 0x7E, 0x7E, 0x02, 0x02, 0x0, //T
+		0x0, 0x7E, 0x4A, 0x4A, 0x4A, 0x42, 0x42, 0x0, //E
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 //ESPACIO
+	};
+	
 	int inicio = 0;
 	int valor3 = 1;
 	int jugadores = 0;
@@ -315,6 +349,50 @@ int main(void)
 		}
 		valor3 = 0;
 		
+		if (jugadores == 3){
+			//PARA EL CASO DE LAS 3 ESQUINAS
+			int referencia[4] = {1,2,3};
+			int orden_juego[4] = {0,0,0};
+			int aleatorio = 0;
+			
+			for (int i=0; i<3; i++){
+				// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
+				do {
+					aleatorio = random()%3; //[0,3) // LO USO PARA LAS POSICIONES
+				} while (referencia[aleatorio] == 0);
+				
+				orden_juego[i] = referencia[aleatorio];
+				referencia[aleatorio] = 0;
+			}
+			
+			// MOVIMIENTO DE LOS NUMEROS
+			// TURNO ESQUINA 1
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA1);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[0],PORT,UNO,DOS,TRES,CUATRO);
+			
+			
+			// TURNO ESQUINA 2
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA2);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[1],PORT,UNO,DOS,TRES,CUATRO);
+			
+			// TURNO ESQUINA 3
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA3);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[2],PORT,UNO,DOS,TRES,CUATRO);
+			
+		}
+		
 		if (jugadores == 4){
 			//PARA EL CASO DE LAS 4 ESQUINAS
 			int referencia[4] = {1,2,3,4};
@@ -368,28 +446,89 @@ int main(void)
 			seleccion_orden(orden_juego[3],PORT,UNO,DOS,TRES,CUATRO);
 			
 			_delay_ms(200);
-		}
-		
-		
-		
-		hola(PORT,MENSAJE);
-		
-		
-		
-		
-		
-		
-		/*//INICIO 0B 0100 0000 NO SALE DEL WHILE HASTA QUE SE PRESIONE ALGUN BOTÓN
-		while (PIND == 0x4){
-		}
-		
-		
-		//PRESIONA BOTONERA START/NEXT 0B 0110 0000
-		if (PIND == 0x6){
 			
-			while (PIND == 0x6){
-			}	
-		}*/
+			char orden_indice [4] = {0,0,0,0};
+			int bandera = 0;
+			while (bandera < 4){
+				for (int i = 0; i<4; i++) {
+					int jugador_actual = orden_juego[i];
+					if (jugador_actual == bandera+1){
+						orden_indice[bandera] = i;
+						bandera += 1;
+						break;
+					}	
+				}
+			}
+			bandera = 0;
+			int entrada = 1;
+			int avance_derecha = 7;
+			int avance_izquierda = 7;
+			int resultado = 255;
+			int resultado_derecha = 255;
+			int resultado_izquierda = 255;
+			while (bandera < 1){
+				int indice = orden_indice[bandera];
+				switch(indice){
+					case 0:
+						for (int i=0; i<20; i++){
+							uno(PORT,UNO);
+						}
+						break;
+					case 1:
+						for (int i=0; i<20; i++){
+							dos(PORT,DOS);
+						}
+						break;
+					case 2:
+						for (int i=0; i<20; i++){
+							tres(PORT,TRES);
+						}
+						break;
+					case 3:
+						PISO[0] = 129;
+						PISO[3] = resultado;
+						PISO[4] = resultado;
+						PISO[7] = UBICACION_INFERIOR[0];
+						while (entrada && avance_derecha>=0 && avance_izquierda>=0) {
+							//129,0,0,255,255,0,0,129
+							piso(PORT,PISO);
+							//129,0,0,255,255,0,0,1
+							PISO[7] = UBICACION_INFERIOR[1];
+							PISO[3] = resultado;
+							PISO[4] = resultado;
+							//81,0,0,255,255,0,0,1
+							piso(PORT,PISO);
+							//129,0,0,255,127,0,0,129
+							PISO[7] = UBICACION_INFERIOR[0];
+							PISO[3] = resultado_izquierda;
+							PISO[4] = resultado_derecha;
+							// SI PRESIONA PARA LA DERECHA
+							if (PINC == 0x42) {
+								// SONIDO DEL CLICK
+								PORTC = ((1<<4));
+								_delay_ms(0.25);
+								PORTC = ((0<<4));
+								resultado_derecha = (pow(2,8)-1) - (pow(2,avance_derecha));
+								PISO[4] = resultado_derecha;
+								avance_derecha -= 1;
+							}
+							if (PINC == 0x44) {
+								// SONIDO DEL CLICK
+								PORTC = ((1<<4));
+								_delay_ms(0.25);
+								PORTC = ((0<<4));
+								resultado_izquierda = (pow(2,8)-1) - (pow(2,avance_izquierda));
+								PISO[4] = resultado_izquierda;
+								avance_izquierda -= 1;
+							}	
+						}
+						break;
+				}
+				bandera += 1;
+			}
+		}
+		
+		ganaste(PORT,GANASTE);
 		
 	}
 }
