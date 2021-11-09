@@ -6,9 +6,11 @@
  */ 
 
 #define F_CPU 8000000
+#include <stdlib.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include "UART.h"
+
 
 // RECORRIDO DEL CODIGO HEXADECIMAL DE CADA CARACTER O FORMA
 void filas(int i, int velocidad, char PORT[], char FORMA[]){
@@ -67,17 +69,88 @@ void squid_game(char PORT[], char SQUID_GAME[]) {
 	PORTC = ((0<<3));
 }
 
-void numero3(char PORT[], char NUMERO3[]){
+void numero(char PORT[], char NUMERO[]){
 	for (int i=0;i<8;i+=8)
 	{
-		filas(i,10,PORT,NUMERO3);
+		filas(i,10,PORT,NUMERO);
 	}
 }
 
-void numero4(char PORT[], char NUMERO4[]){
+void uno(char PORT[], char UNO[]){
 	for (int i=0;i<8;i+=8)
 	{
-		filas(i,10,PORT,NUMERO4);
+		filas(i,10,PORT,UNO);
+	}
+}
+
+void dos(char PORT[], char DOS[]){
+	for (int i=0;i<8;i+=8)
+	{
+		filas(i,10,PORT,DOS);
+	}
+}
+
+void tres(char PORT[], char TRES[]){
+	for (int i=0;i<8;i+=8)
+	{
+		filas(i,10,PORT,TRES);
+	}
+}
+
+void cuatro(char PORT[], char CUATRO[]){
+	for (int i=0;i<8;i+=8)
+	{
+		filas(i,10,PORT,CUATRO);
+	}
+}
+
+void esquina(char PORT[], char ESQUINA[]){
+	for (int i=0;i<=8;i+=8)
+	{
+		filas(i,100,PORT,ESQUINA);
+	}
+}
+
+unsigned char numeroAleatorio(){
+	return random()%100; //VALOR ALEATORIO ENTRE [0-100)
+}
+
+void semilla(unsigned char valor){
+	srandom(valor);
+}
+
+void numeros_sorteo(char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
+	dos(PORT,DOS);_delay_ms(20);
+	uno(PORT,UNO);_delay_ms(20);
+	cuatro(PORT,CUATRO);_delay_ms(20);
+	tres(PORT,TRES);_delay_ms(20);
+	uno(PORT,UNO);_delay_ms(20);
+	tres(PORT,TRES);_delay_ms(20);
+	dos(PORT,DOS);_delay_ms(20);
+}
+
+void seleccion_orden(int valor, char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
+	switch(valor){
+		case 1:
+			for (int i=0; i<20; i++){
+				uno(PORT,UNO);
+			}
+			break;
+		case 2:
+			for (int i=0; i<20; i++){
+				dos(PORT,DOS);
+			}
+			break;
+		case 3:
+			for (int i=0; i<20; i++){
+				tres(PORT,TRES);
+			}
+			break;
+		case 4:
+			for (int i=0; i<20; i++){
+				cuatro(PORT,CUATRO);
+			}
+			break;
 	}
 }
 
@@ -139,16 +212,48 @@ int main(void)
 	};
 	
 	char NUMERO4[] = {
-		0x40, 0xA0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x00, // CON FLECHAS
+		0x40, 0xA0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x0, // CON FLECHAS
 		//0x0, 0x0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x0 // SIN FLECHAS
 	};
 	
+	char UNO[] = {
+		0x0, 0x0, 0x04, 0x04, 0x7E, 0x7E, 0x0, 0x0
+	};
 	
+	char DOS[] = {
+		0x0, 0x0, 0x7A, 0x7A, 0x5E, 0x5E, 0x0, 0x0
+	};
 	
+	char TRES[] = {
+		0x0, 0x0, 0x5A, 0x5A, 0x7E, 0x7E, 0x0, 0x0
+	};
+	
+	char CUATRO[] = {
+		0x0, 0x0, 0x18, 0x1C, 0x72, 0x7E, 0x0, 0x0
+	};
+	
+	char ESQUINA1[] = {
+		0x01, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+	};
+	
+	char ESQUINA2[] = {
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x01,
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+	};
+	
+	char ESQUINA3[] = {
+		0x80, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+	};
+	
+	char ESQUINA4[] = {
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80,
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+	};
 	
 	int inicio = 0;
 	int valor3 = 1;
-	int valor4 = 1;
 	int jugadores = 0;
 	
 	while(1){
@@ -158,17 +263,17 @@ int main(void)
 			// EMPIEZA EL JUEGO CON START/NEXT 0B 0100 0001
 			if (PINC == 0x41) {
 				inicio = 1;
+				//squid_game(PORT,SQUID_GAME);
 				break;
 			}
 			animacion2(PORT,ANIMACION2);
 			// EMPIEZA EL JUEGO CON START/NEXT 0B 0100 0001
 			if (PINC == 0x41) {
 				inicio = 1;
+				//squid_game(PORT,SQUID_GAME);
 				break;
 			}
 		}
-		
-		squid_game(PORT,SQUID_GAME);
 		
 		/* EMPIEZA LA SELECCION DE CANTIDAD DE JUGADORES CON:
 		DERECHA: 0B 0100 0010
@@ -177,15 +282,15 @@ int main(void)
 		//NUMERO 3 CON FLECHA A LA DERECHA
 		jugadores = 0;
 		while (valor3) {
-			numero3(PORT,NUMERO3);
+			numero(PORT,NUMERO3);
 			// SI PRESIONA PARA LA DERECHA
 			if (PINC == 0x42) {
 				// SONIDO DEL CLICK
 				PORTC = ((1<<4));
 				_delay_ms(0.25);
 				PORTC = ((0<<4));
-				while (valor4) {
-					numero4(PORT,NUMERO4);
+				while (1) {
+					numero(PORT,NUMERO4);
 					// SI PRESIONA PARA LA IZQUIERDA
 					if (PINC == 0x44) {
 						// SONIDO DEL CLICK
@@ -210,10 +315,60 @@ int main(void)
 		}
 		valor3 = 0;
 		
+		if (jugadores == 4){
+			//PARA EL CASO DE LAS 4 ESQUINAS
+			int referencia[4] = {1,2,3,4};
+			int orden_juego[4] = {0,0,0,0};
+			int aleatorio = 0;
+			
+			for (int i=0; i<4; i++){
+				// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
+				do {
+					aleatorio = random()%4; //[0,4) // LO USO PARA LAS POSICIONES
+				} while (referencia[aleatorio] == 0);
+				
+				orden_juego[i] = referencia[aleatorio];
+				referencia[aleatorio] = 0;
+			}
+			
+			// MOVIMIENTO DE LOS NUMEROS
+			// TURNO ESQUINA 1
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA1);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[0],PORT,UNO,DOS,TRES,CUATRO);
+			
+			
+			// TURNO ESQUINA 2
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA2);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[1],PORT,UNO,DOS,TRES,CUATRO);
+			
+			// TURNO ESQUINA 3
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA3);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[2],PORT,UNO,DOS,TRES,CUATRO);
+			
+			// TURNO ESQUINA 4
+			PORTC = ((1<<4));
+			_delay_ms(0.25);
+			PORTC = ((0<<4));
+			esquina(PORT,ESQUINA4);
+			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+			seleccion_orden(orden_juego[3],PORT,UNO,DOS,TRES,CUATRO);
+			
+			_delay_ms(200);
+		}
 		
 		hola(PORT,MENSAJE);
-		
-		
 		
 		
 		
