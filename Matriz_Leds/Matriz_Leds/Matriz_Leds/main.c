@@ -64,7 +64,7 @@ void squid_game(char PORT[], char SQUID_GAME[]) {
 	//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
 	for (int i=0;i<80;i++)
 	{
-		filas(i,10,PORT,SQUID_GAME);
+		filas(i,7,PORT,SQUID_GAME);
 	}
 	PORTC = ((0<<3));
 }
@@ -111,13 +111,13 @@ void esquina(char PORT[], char ESQUINA[]){
 	}
 }
 
-unsigned char numeroAleatorio(){
+/*unsigned char numeroAleatorio(){
 	return random()%100; //VALOR ALEATORIO ENTRE [0-100)
 }
 
 void semilla(unsigned char valor){
 	srandom(valor);
-}
+}*/
 
 void numeros_sorteo(char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
 	dos(PORT,DOS);_delay_ms(20);
@@ -263,14 +263,14 @@ int main(void)
 			// EMPIEZA EL JUEGO CON START/NEXT 0B 0100 0001
 			if (PINC == 0x41) {
 				inicio = 1;
-				//squid_game(PORT,SQUID_GAME);
+				squid_game(PORT,SQUID_GAME);
 				break;
 			}
 			animacion2(PORT,ANIMACION2);
 			// EMPIEZA EL JUEGO CON START/NEXT 0B 0100 0001
 			if (PINC == 0x41) {
 				inicio = 1;
-				//squid_game(PORT,SQUID_GAME);
+				squid_game(PORT,SQUID_GAME);
 				break;
 			}
 		}
@@ -324,6 +324,8 @@ int main(void)
 			for (int i=0; i<4; i++){
 				// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
 				do {
+					/*unsigned char valor = numeroAleatorio();
+					semilla(valor);*/
 					aleatorio = random()%4; //[0,4) // LO USO PARA LAS POSICIONES
 				} while (referencia[aleatorio] == 0);
 				
@@ -368,7 +370,12 @@ int main(void)
 			_delay_ms(200);
 		}
 		
+		
+		
 		hola(PORT,MENSAJE);
+		
+		
+		
 		
 		
 		
