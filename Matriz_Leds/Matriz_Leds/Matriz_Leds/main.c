@@ -1,3 +1,10 @@
+// *******************************************************************
+//								SQUID GAME
+// *******************************************************************
+
+
+// ******************************* LIBRERIAS *************************************
+
 #define F_CPU 8000000
 #include <stdlib.h>
 #include <math.h>
@@ -5,6 +12,7 @@
 #include <util/delay.h>
 #include "UART.h"
 
+// ******************************* FUNCIONES DEL JUEGO *************************************
 
 // RECORRIDO DEL CODIGO HEXADECIMAL DE CADA CARACTER O FORMA
 void filas(int i, int velocidad, char PORT[], char FORMA[]){
@@ -47,6 +55,7 @@ void animacion2(char PORT[], char ANIMACION2[]) {
 	}
 }
 
+// MENSAJE DE HOLA
 void hola(char PORT[], char MENSAJE[]) {
 	//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
 	for (int i=0;i<32;i++)
@@ -55,6 +64,7 @@ void hola(char PORT[], char MENSAJE[]) {
 	}
 }
 
+// MENSAJE DE SQUID GAME AL INICIO DEL JUEGO
 void squid_game(char PORT[], char SQUID_GAME[]) {
 	PORTC = ((1<<3));
 	//MATRIZ DE LEDS CON DESPLAZAMIENTO DE UNA CADENA
@@ -65,6 +75,14 @@ void squid_game(char PORT[], char SQUID_GAME[]) {
 	PORTC = ((0<<3));
 }
 
+// SONIDO DEL CLICK PARA DIFERENTES USOS
+void sonido_click(){
+	PORTC = ((1<<4));
+	_delay_ms(0.25);
+	PORTC = ((0<<4));
+}
+
+// NUMEROS DEL 1 AL 4 EN PANTALLA
 void numero(char PORT[], char NUMERO[]){
 	for (int i=0;i<8;i+=8)
 	{
@@ -72,39 +90,23 @@ void numero(char PORT[], char NUMERO[]){
 	}
 }
 
-void uno(char PORT[], char UNO[]){
-	for (int i=0;i<8;i+=8)
-	{
-		filas(i,10,PORT,UNO);
-	}
-}
-
-void dos(char PORT[], char DOS[]){
-	for (int i=0;i<8;i+=8)
-	{
-		filas(i,10,PORT,DOS);
-	}
-}
-
-void tres(char PORT[], char TRES[]){
-	for (int i=0;i<8;i+=8)
-	{
-		filas(i,10,PORT,TRES);
-	}
-}
-
-void cuatro(char PORT[], char CUATRO[]){
-	for (int i=0;i<8;i+=8)
-	{
-		filas(i,10,PORT,CUATRO);
-	}
-}
-
+// ESQUINA DEL JUGADOR ACTUAL
 void esquina(char PORT[], char ESQUINA[]){
 	for (int i=0;i<=8;i+=8)
 	{
 		filas(i,100,PORT,ESQUINA);
 	}
+}
+
+// MOVIMIENTO DE NUMEROS HASTA LLEGAR AL VALOR ALEATORIO DESEADO
+void numeros_sorteo(char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
+	numero(PORT,DOS);_delay_ms(20);
+	numero(PORT,UNO);_delay_ms(20);
+	numero(PORT,CUATRO);_delay_ms(20);
+	numero(PORT,TRES);_delay_ms(20);
+	numero(PORT,UNO);_delay_ms(20);
+	numero(PORT,TRES);_delay_ms(20);
+	numero(PORT,DOS);_delay_ms(20);
 }
 
 /*unsigned char numeroAleatorio(){
@@ -115,41 +117,54 @@ void semilla(unsigned char valor){
 	srandom(valor);
 }*/
 
-void numeros_sorteo(char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
-	dos(PORT,DOS);_delay_ms(20);
-	uno(PORT,UNO);_delay_ms(20);
-	cuatro(PORT,CUATRO);_delay_ms(20);
-	tres(PORT,TRES);_delay_ms(20);
-	uno(PORT,UNO);_delay_ms(20);
-	tres(PORT,TRES);_delay_ms(20);
-	dos(PORT,DOS);_delay_ms(20);
+// REALIZA LA SELECCION ALEATORIA PARA 3 O 4 JUGADORES
+void seleccion_aleatoria(int jugadores, int aleatorio, int REFER[], int ORDEN[]) {
+	for (int i=0; i<jugadores; i++){
+		// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
+		do {
+			aleatorio = random()%jugadores; //[0,3) // LO USO PARA LAS POSICIONES
+		} while (REFER[aleatorio] == 0);
+		
+		ORDEN[i] = REFER[aleatorio];
+		REFER[aleatorio] = 0;
+	}
 }
 
+// PERMITE MOSTRAR EL NUMERO ALEATORIO EN PANTALLA
 void seleccion_orden(int valor, char PORT[], char UNO[], char DOS[], char TRES[], char CUATRO[]){
 	switch(valor){
 		case 1:
 			for (int i=0; i<20; i++){
-				uno(PORT,UNO);
+				numero(PORT,UNO);
 			}
 			break;
 		case 2:
 			for (int i=0; i<20; i++){
-				dos(PORT,DOS);
+				numero(PORT,DOS);
 			}
 			break;
 		case 3:
 			for (int i=0; i<20; i++){
-				tres(PORT,TRES);
+				numero(PORT,TRES);
 			}
 			break;
 		case 4:
 			for (int i=0; i<20; i++){
-				cuatro(PORT,CUATRO);
+				numero(PORT,CUATRO);
 			}
 			break;
 	}
 }
 
+// COMPACTA TODO EL PROCESO DE SELECCION ALEATORIA Y MOSTRAR NUMEROS EN PANTALLA
+void visualizar_turno(char PORT[], char ESQUINA[], int ORDEN[], int indice, char UNO[], char DOS[], char TRES[], char CUATRO[]){
+	sonido_click();
+	esquina(PORT,ESQUINA);
+	numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
+	seleccion_orden(ORDEN[indice],PORT,UNO,DOS,TRES,CUATRO);
+}
+
+// VISUALIZACION DEL PISO DEL JUEGO
 void piso(char PORT[], char PISO[]){
 	for (int i=0;i<8;i+=8)
 	{
@@ -157,6 +172,7 @@ void piso(char PORT[], char PISO[]){
 	}
 }
 
+// MENSAJE DE "GANASTE" AL FINAL DEL JUEGO EN CASO DE LLEGAR A LA VICTORIA
 void ganaste(char PORT[], char GANASTE[]) {
 	//MENSAJE DE VICTORIA
 	PORTC = ((1<<5));
@@ -167,21 +183,24 @@ void ganaste(char PORT[], char GANASTE[]) {
 	PORTC = ((1<<5));
 }
 
+// ******************************* MAIN *************************************
 int main(void)
 {
-	// PARA EL DATO
+	// PUERTOS PARA EL DATO DE LA MATRIZ
 	DDRB = 0B11111111; // SALIDA TODO EL PUERTO B
 	
-	// PARA EL DESPLAZMIENTO
+	// PUERTOS PARA EL DESPLAZMIENTO DE LA MATRIZ
 	DDRD = 0B11111111; // SALIDAS TODO EL PUERTO D
 	
-	// PARA LAS BOTONERAS
+	// PUERTOS PARA LAS BOTONERAS
 	DDRC |= (0<<0)|(0<<1)|(0<<2); //ENTRADAS PARA LOS PUERTOS C0,C1,C2
+	
+	// PUERTOS PARA LOS SONIDOS
 	DDRC |= (1<<3)|(1<<4)|(1<<5); //SALIDA PARA EL PUERTO C3 MUSICA RED LIGHT GREEN LIGHT, C4 CLICK, y C5 VICTORIA
 		
 	//UART_init();
 	
-	// VA CON EL DESPLAZMIENTO
+	// PUERTOS EN DECIMAL CORRESPONDIENTE AL DESPLAZMIENTO
 	char PORT[8] =  {1,2,4,8,16,32,64,128};//VALORES DE PINES DEL PORTD
 	//{PD0,PD1,PD2,PD3,PD4,PD5,PD6,PD7}
 	
@@ -192,6 +211,7 @@ int main(void)
 	char UBICACION_SUPERIOR[2] = {129,80};
 	char UBICACION_INFERIOR[2] = {129,1};
 	
+	// ********************* MENSAJES, NUMEROS, FORMAS *********************
 	char SQUID_GAME[]={0x0, 0x44, 0x4A, 0x4A, 0x4A, 0x4A, 0x32, 0x0, //S
 		0x0, 0x3C, 0x42, 0x42, 0x22, 0x5C, 0x0, 0x0, //Q
 		0x0, 0x3E, 0x40, 0x40, 0x40, 0x40, 0x3E, 0x0, //U
@@ -226,53 +246,51 @@ int main(void)
 	};
 	
 	char NUMERO3[] = {
-		0x00, 0x00, 0x11, 0x15, 0x15, 0x1F, 0xA0, 0x40, // CON FLECHAS
-		//0x0, 0x0, 0x11, 0x15, 0x15, 0x1F, 0x0, 0x0 // SIN FLECHAS
+		0x00, 0x00, 0x11, 0x15, 0x15, 0x1F, 0xA0, 0x40 // CON FLECHAS
 	};
 	
 	char NUMERO4[] = {
-		0x40, 0xA0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x0, // CON FLECHAS
-		//0x0, 0x0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x0 // SIN FLECHAS
+		0x40, 0xA0, 0x07, 0x04, 0x04, 0x1F, 0x0, 0x0 // CON FLECHAS
 	};
 	
 	char UNO[] = {
-		0x0, 0x0, 0x04, 0x04, 0x7E, 0x7E, 0x0, 0x0
+		0x0, 0x0, 0x04, 0x04, 0x7E, 0x7E, 0x0, 0x0 // UNO DEL SORTEO
 	};
 	
 	char DOS[] = {
-		0x0, 0x0, 0x7A, 0x7A, 0x5E, 0x5E, 0x0, 0x0
+		0x0, 0x0, 0x7A, 0x7A, 0x5E, 0x5E, 0x0, 0x0 // DOS DEL SORTEO
 	};
 	
 	char TRES[] = {
-		0x0, 0x0, 0x5A, 0x5A, 0x7E, 0x7E, 0x0, 0x0
+		0x0, 0x0, 0x5A, 0x5A, 0x7E, 0x7E, 0x0, 0x0 // TRES DEL SORTEO
 	};
 	
 	char CUATRO[] = {
-		0x0, 0x0, 0x18, 0x1C, 0x72, 0x7E, 0x0, 0x0
+		0x0, 0x0, 0x18, 0x1C, 0x72, 0x7E, 0x0, 0x0 // CUATRO DEL SORTEO
 	};
 	
 	char ESQUINA1[] = {
-		0x01, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+		0x01, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // ESQUINA 'A' ENCENDIDA
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 // ESQUINA 'A' APAGADA
 	};
 	
 	char ESQUINA2[] = {
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x01,
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x01, // ESQUINA 'B' ENCENDIDA
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 // ESQUINA 'B' APAGADA
 	};
 	
 	char ESQUINA3[] = {
-		0x80, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+		0x80, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, // ESQUINA 'C' ENCENDIDA
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 // ESQUINA 'C' APAGADA
 	};
 	
 	char ESQUINA4[] = {
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80,
-		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80, // ESQUINA 'D' ENCENDIDA
+		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 // ESQUINA 'D' APAGADA
 	};
 	
 	char PISO[] = {
-		0,0,0,0,0,0,0,0
+		0,0,0,0,0,0,0,0 //REFERENCIA INCIAL DEL PISO APAGADO POR COMPLETO
 	};
 	
 	char GANASTE[] = {
@@ -286,12 +304,15 @@ int main(void)
 		0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 //ESPACIO
 	};
 	
+	// VARIABLES INICIALES PREVIO A LA ENTRADA AL WHILE(1)
 	int inicio = 0;
 	int valor3 = 1;
 	int jugadores = 0;
 	
+	// ********************* WHILE(1) *********************
 	while(1){
 		
+		// ANIMACION DE ENTRADA
 		while (!inicio) {
 			animacion1(PORT,ANIMACION1);
 			// EMPIEZA EL JUEGO CON START/NEXT 0B 0100 0001
@@ -310,7 +331,7 @@ int main(void)
 		}
 		
 		/* EMPIEZA LA SELECCION DE CANTIDAD DE JUGADORES CON:
-		DERECHA: 0B 0100 0010
+		DERECHA:   0B 0100 0010
 		IZQUIERDA: 0B 0100 0100 */
 		
 		//NUMERO 3 CON FLECHA A LA DERECHA
@@ -320,17 +341,13 @@ int main(void)
 			// SI PRESIONA PARA LA DERECHA
 			if (PINC == 0x42) {
 				// SONIDO DEL CLICK
-				PORTC = ((1<<4));
-				_delay_ms(0.25);
-				PORTC = ((0<<4));
+				sonido_click();
 				while (1) {
 					numero(PORT,NUMERO4);
 					// SI PRESIONA PARA LA IZQUIERDA
 					if (PINC == 0x44) {
 						// SONIDO DEL CLICK
-						PORTC = ((1<<4));
-						_delay_ms(0.25);
-						PORTC = ((0<<4));
+						sonido_click();
 						break;
 					}
 					// SI SELECCIONA LA OPCION DE 4 JUGADORES
@@ -347,103 +364,54 @@ int main(void)
 				break;
 			}
 		}
+		// SE VUELVE AL VALOR3 = 0 PARA NO ENTRAR A LA SELECCION NUEVAMENTE
 		valor3 = 0;
 		
+		// EMPIEZA EL JUEGO EN BASE A CANTIDAD DE JUGADORES (3 O 4)
+		// ---> ESTO ES PARA EL CASO QUE SE SELECCIONE 3 JUGADORES
 		if (jugadores == 3){
 			//PARA EL CASO DE LAS 3 ESQUINAS
-			int referencia[4] = {1,2,3};
-			int orden_juego[4] = {0,0,0};
+			int referencia[3] = {1,2,3};
+			int orden_juego[3] = {0,0,0};
 			int aleatorio = 0;
 			
-			for (int i=0; i<3; i++){
-				// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
-				do {
-					aleatorio = random()%3; //[0,3) // LO USO PARA LAS POSICIONES
-				} while (referencia[aleatorio] == 0);
-				
-				orden_juego[i] = referencia[aleatorio];
-				referencia[aleatorio] = 0;
-			}
+			// SELECCION ALEATORIA DE LOS 3 JUGADORES
+			seleccion_aleatoria(jugadores,aleatorio,referencia,orden_juego);
 			
 			// MOVIMIENTO DE LOS NUMEROS
 			// TURNO ESQUINA 1
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA1);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[0],PORT,UNO,DOS,TRES,CUATRO);
-			
+			visualizar_turno(PORT,ESQUINA1,orden_juego,0,UNO,DOS,TRES,CUATRO);
 			
 			// TURNO ESQUINA 2
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA2);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[1],PORT,UNO,DOS,TRES,CUATRO);
+			visualizar_turno(PORT,ESQUINA2,orden_juego,1,UNO,DOS,TRES,CUATRO);
 			
 			// TURNO ESQUINA 3
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA3);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[2],PORT,UNO,DOS,TRES,CUATRO);
+			visualizar_turno(PORT,ESQUINA3,orden_juego,2,UNO,DOS,TRES,CUATRO);
 			
 		}
 		
+		// ---> ESTO ES PARA EL CASO QUE SE SELECCIONE 4 JUGADORES
 		if (jugadores == 4){
 			//PARA EL CASO DE LAS 4 ESQUINAS
 			int referencia[4] = {1,2,3,4};
 			int orden_juego[4] = {0,0,0,0};
 			int aleatorio = 0;
 			
-			for (int i=0; i<4; i++){
-				// VALOR ALEATORIO PARA ESCOGER UNA POSICION DE LA REFERENCIA
-				do {
-					/*unsigned char valor = numeroAleatorio();
-					semilla(valor);*/
-					aleatorio = random()%4; //[0,4) // LO USO PARA LAS POSICIONES
-				} while (referencia[aleatorio] == 0);
-				
-				orden_juego[i] = referencia[aleatorio];
-				referencia[aleatorio] = 0;
-			}
+			// SELECCION ALEATORIA DE LOS 3 JUGADORES
+			seleccion_aleatoria(jugadores,aleatorio,referencia,orden_juego);
 			
 			// MOVIMIENTO DE LOS NUMEROS
 			// TURNO ESQUINA 1
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA1);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[0],PORT,UNO,DOS,TRES,CUATRO);
-			
+			visualizar_turno(PORT,ESQUINA1,orden_juego,0,UNO,DOS,TRES,CUATRO);
 			
 			// TURNO ESQUINA 2
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA2);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[1],PORT,UNO,DOS,TRES,CUATRO);
+			visualizar_turno(PORT,ESQUINA2,orden_juego,1,UNO,DOS,TRES,CUATRO);
 			
 			// TURNO ESQUINA 3
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA3);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[2],PORT,UNO,DOS,TRES,CUATRO);
+			visualizar_turno(PORT,ESQUINA3,orden_juego,2,UNO,DOS,TRES,CUATRO);
 			
 			// TURNO ESQUINA 4
-			PORTC = ((1<<4));
-			_delay_ms(0.25);
-			PORTC = ((0<<4));
-			esquina(PORT,ESQUINA4);
-			numeros_sorteo(PORT,UNO,DOS,TRES,CUATRO);
-			seleccion_orden(orden_juego[3],PORT,UNO,DOS,TRES,CUATRO);
+			visualizar_turno(PORT,ESQUINA4,orden_juego,3,UNO,DOS,TRES,CUATRO);
 			
 			_delay_ms(200);
 			
@@ -471,17 +439,17 @@ int main(void)
 				switch(indice){
 					case 0:
 						for (int i=0; i<20; i++){
-							uno(PORT,UNO);
+							numero(PORT,UNO);
 						}
 						break;
 					case 1:
 						for (int i=0; i<20; i++){
-							dos(PORT,DOS);
+							numero(PORT,DOS);
 						}
 						break;
 					case 2:
 						for (int i=0; i<20; i++){
-							tres(PORT,TRES);
+							numero(PORT,TRES);
 						}
 						break;
 					case 3:
